@@ -3,21 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoMart | Seller Registration</title>
+  <title>Online Car Sale | Seller Registration</title>
   <style>
     :root {
-      --primary: #1f4e79;
-      --primary-dark: #173a59;
-      --accent: #2c7be5;
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #d7deea;
-      --success: #1b8f4d;
-      --error: #d93025;
-      --shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
-      --radius: 18px;
+      --bg: #f3f3f3;
+      --surface: rgba(255, 255, 255, 0.94);
+      --surface-solid: #ffffff;
+      --surface-soft: #fafafa;
+      --surface-dark: #141414;
+      --text: #111111;
+      --text-muted: #676767;
+      --text-soft: #8b8b8b;
+      --border: #d8d8d8;
+      --border-strong: #bcbcbc;
+      --line: rgba(255, 255, 255, 0.08);
+      --shadow-sm: 0 10px 22px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.12);
+      --shadow-dark: 0 26px 55px rgba(0, 0, 0, 0.32);
+      --glow: 0 0 0 1px rgba(255, 255, 255, 0.22) inset;
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --success: #2f6b3d;
+      --error: #b42318;
+      --focus-ring: rgba(255, 255, 255, 0.22);
+      --dark-focus: rgba(0, 0, 0, 0.08);
+      --silver-1: #ededed;
+      --silver-2: #d9d9d9;
+      --silver-3: #b9b9b9;
     }
 
     * {
@@ -26,11 +40,19 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #eef3f9 0%, #f9fbfd 100%);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 32%),
+        linear-gradient(180deg, #ededed 0%, #f5f5f5 42%, #efefef 100%);
       color: var(--text);
       line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     a {
@@ -38,165 +60,458 @@
       color: inherit;
     }
 
+    .page-shell {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      pointer-events: none;
+      border-radius: 50%;
+      filter: blur(55px);
+      opacity: 0.42;
+    }
+
+    .page-shell::before {
+      width: 240px;
+      height: 240px;
+      background: rgba(255, 255, 255, 0.8);
+      top: 90px;
+      right: 3%;
+    }
+
+    .page-shell::after {
+      width: 260px;
+      height: 260px;
+      background: rgba(0, 0, 0, 0.05);
+      bottom: 40px;
+      left: 2%;
+    }
+
     .navbar {
-      background-color: #ffffff;
-      border-bottom: 1px solid #e5eaf2;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.78);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.035);
     }
 
     .nav-container {
-      width: min(1100px, 92%);
+      width: min(1140px, 92%);
       margin: 0 auto;
+      min-height: 76px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      min-height: 72px;
       gap: 18px;
       flex-wrap: wrap;
     }
 
     .brand {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: var(--primary);
-      letter-spacing: 0.3px;
+      font-size: 1.34rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text);
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .brand::after {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 2px;
+      margin-top: 6px;
+      background: linear-gradient(90deg, #111111, #8f8f8f);
+      border-radius: 999px;
     }
 
     .nav-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
       list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .nav-links a {
       display: inline-block;
-      padding: 10px 14px;
-      border-radius: 10px;
-      color: var(--text);
+      padding: 10px 15px;
+      border-radius: 999px;
+      font-size: 0.96rem;
       font-weight: 600;
-      transition: 0.25s ease;
+      color: #222222;
+      transition: background-color 0.28s ease, color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+      position: relative;
     }
 
     .nav-links a:hover,
     .nav-links a:focus {
-      background-color: #edf4ff;
-      color: var(--accent);
+      background-color: rgba(0, 0, 0, 0.05);
       outline: none;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
     }
 
     .nav-links .active {
-      background-color: var(--primary);
+      background: linear-gradient(180deg, #1c1c1c 0%, #111111 100%);
       color: #ffffff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
     }
 
     .page-wrapper {
-      width: min(1100px, 92%);
-      margin: 34px auto 50px;
+      width: min(1140px, 92%);
+      margin: 38px auto 56px;
+      animation: pageFade 0.8s ease both;
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-card {
-      background: linear-gradient(135deg, #1f4e79 0%, #2c7be5 100%);
-      color: #ffffff;
-      border-radius: var(--radius);
-      padding: 30px;
-      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
+        linear-gradient(135deg, #1b1b1b 0%, #101010 58%, #1d1d1d 100%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 28px;
+      padding: 38px 34px;
       margin-bottom: 28px;
+      box-shadow: var(--shadow-dark);
+      color: #ffffff;
+      isolation: isolate;
     }
 
-    .hero-card h1 {
-      font-size: 2rem;
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.02) 22%, rgba(255, 255, 255, 0) 40%),
+        linear-gradient(115deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 36%);
+      z-index: -1;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -28px;
+      width: 360px;
+      height: 160px;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 55%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+      border-radius: 120px 0 0 0;
+      transform: skewX(-18deg);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .hero-topline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      box-shadow: var(--glow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .hero-topline::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffffff, #a8a8a8);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.35fr 0.8fr;
+      gap: 28px;
+      align-items: end;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2rem, 3vw, 2.85rem);
+      line-height: 1.1;
+      letter-spacing: 0.4px;
+      margin-bottom: 14px;
+      font-weight: 700;
+      max-width: 620px;
+    }
+
+    .hero-text p {
+      max-width: 620px;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 1rem;
+    }
+
+    .hero-side {
+      display: flex;
+      justify-content: flex-end;
+      align-items: end;
+    }
+
+    .hero-stat-card {
+      width: 100%;
+      max-width: 280px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 18px 18px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 36px rgba(0, 0, 0, 0.18);
+    }
+
+    .hero-stat-card small {
+      display: block;
+      color: rgba(255, 255, 255, 0.62);
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      font-size: 0.72rem;
       margin-bottom: 10px;
     }
 
-    .hero-card p {
-      max-width: 760px;
-      opacity: 0.95;
-      font-size: 1rem;
+    .hero-stat-card strong {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .hero-stat-card span {
+      display: block;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.92rem;
+      line-height: 1.6;
     }
 
     .content-grid {
       display: grid;
-      grid-template-columns: 1fr 1.3fr;
+      grid-template-columns: 0.92fr 1.28fr;
       gap: 24px;
       align-items: start;
     }
 
     .info-panel,
     .form-panel {
-      background-color: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid #edf1f7;
+      position: relative;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
+      animation: liftIn 0.75s ease both;
+    }
+
+    .form-panel {
+      animation-delay: 0.08s;
+    }
+
+    @keyframes liftIn {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .info-panel:hover,
+    .form-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-shine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(130deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08) 24%, rgba(255, 255, 255, 0) 46%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 24%);
+      opacity: 0.7;
     }
 
     .info-panel {
-      padding: 28px;
+      padding: 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 248, 0.95)),
+        var(--surface-solid);
     }
 
-    .info-panel h2 {
-      color: var(--primary);
-      margin-bottom: 14px;
-      font-size: 1.35rem;
+    .info-panel h2,
+    .form-panel h2 {
+      font-size: 1.45rem;
+      letter-spacing: 0.2px;
+      margin-bottom: 12px;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-panel p,
+    .sub-text {
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
     }
 
     .info-panel p {
-      color: var(--muted);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .feature-list {
       list-style: none;
       display: grid;
       gap: 14px;
+      position: relative;
+      z-index: 1;
     }
 
     .feature-list li {
-      background-color: #f8fbff;
-      border: 1px solid #e4edf9;
-      border-radius: 14px;
-      padding: 14px 16px;
+      position: relative;
+      padding: 18px 18px 18px 20px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(245, 245, 245, 0.96));
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+
+    .feature-list li::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 0;
+      width: 4px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #111111, #9b9b9b);
+    }
+
+    .feature-list li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.1);
     }
 
     .feature-list strong {
       display: block;
       color: var(--text);
-      margin-bottom: 4px;
+      font-size: 1rem;
+      margin-bottom: 5px;
+      letter-spacing: 0.15px;
     }
 
     .feature-list span {
-      color: var(--muted);
-      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
     }
 
     .form-panel {
       padding: 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(252, 252, 252, 0.95)),
+        var(--surface-solid);
     }
 
-    .form-panel h2 {
-      font-size: 1.5rem;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-
-    .form-panel .sub-text {
-      color: var(--muted);
+    .form-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       margin-bottom: 22px;
-      font-size: 0.97rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      background: rgba(255, 255, 255, 0.8);
+      color: #444444;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.7px;
+      font-weight: 700;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .section-tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #111111, #9a9a9a);
+    }
+
+    .sub-text {
+      font-size: 0.96rem;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .form-group.full-width {
@@ -205,144 +520,200 @@
 
     label {
       font-weight: 700;
+      color: #191919;
       margin-bottom: 8px;
-      color: #223046;
+      letter-spacing: 0.15px;
+    }
+
+    .input-wrap {
+      position: relative;
     }
 
     .input-field {
       width: 100%;
-      padding: 13px 14px;
+      padding: 14px 15px;
       border: 1.5px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 1rem;
-      background-color: #ffffff;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 249, 249, 0.98));
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      transition:
+        border-color 0.24s ease,
+        box-shadow 0.24s ease,
+        transform 0.24s ease,
+        background-color 0.24s ease;
     }
 
     .input-field:hover {
-      border-color: #b8c6dc;
+      border-color: var(--border-strong);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        0 10px 18px rgba(0, 0, 0, 0.035);
+      transform: translateY(-1px);
     }
 
     .input-field:focus {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(44, 123, 229, 0.14);
-      background-color: #fcfdff;
+      border-color: #3b3b3b;
+      background: #ffffff;
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.06),
+        0 16px 28px rgba(0, 0, 0, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .input-field::placeholder {
+      color: #9a9a9a;
     }
 
     .input-field.valid {
       border-color: var(--success);
-      background-color: #f4fff8;
+      background-color: #f7fbf8;
     }
 
     .input-field.invalid {
       border-color: var(--error);
-      background-color: #fff7f6;
+      background-color: #fff8f7;
     }
 
     .message {
       min-height: 18px;
-      margin-top: 6px;
+      margin-top: 7px;
+      padding-left: 2px;
       font-size: 0.88rem;
       font-weight: 600;
-    }
-
-    .message.error {
-      color: var(--error);
+      letter-spacing: 0.1px;
     }
 
     .message.success {
       color: var(--success);
     }
 
+    .message.error {
+      color: var(--error);
+    }
+
     .form-actions {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
-      margin-top: 24px;
+      margin-top: 26px;
+      position: relative;
+      z-index: 1;
     }
 
     .btn {
-      border: none;
-      border-radius: 12px;
-      padding: 13px 22px;
-      font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 13px 24px;
+      font-size: 0.98rem;
       font-weight: 700;
+      letter-spacing: 0.25px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      transition:
+        transform 0.26s ease,
+        box-shadow 0.26s ease,
+        background-color 0.26s ease,
+        border-color 0.26s ease,
+        color 0.26s ease;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 45%);
+      opacity: 0;
+      transition: opacity 0.26s ease;
+      pointer-events: none;
+    }
+
+    .btn:hover::before {
+      opacity: 1;
     }
 
     .btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     .btn:focus {
-      outline: 3px solid rgba(44, 123, 229, 0.18);
-      outline-offset: 2px;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
     }
 
     .btn-primary {
-      background-color: var(--primary);
+      background: linear-gradient(180deg, #1d1d1d 0%, #101010 100%);
       color: #ffffff;
-      box-shadow: 0 8px 18px rgba(31, 78, 121, 0.2);
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.16);
     }
 
     .btn-primary:hover {
-      background-color: var(--primary-dark);
+      background: linear-gradient(180deg, #292929 0%, #141414 100%);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.2);
     }
 
     .btn-secondary {
-      background-color: #eef2f7;
-      color: #26364a;
+      background: linear-gradient(180deg, #fbfbfb 0%, #f0f0f0 100%);
+      color: var(--text);
+      border-color: #d8d8d8;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
     }
 
     .btn-secondary:hover {
-      background-color: #dfe7f1;
+      background: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
+      border-color: #c6c6c6;
+      box-shadow: 0 16px 28px rgba(0, 0, 0, 0.07);
     }
 
     .status-box {
-      margin-top: 20px;
+      margin-top: 22px;
       padding: 14px 16px;
-      border-radius: 12px;
+      border-radius: 14px;
       display: none;
       font-weight: 700;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.04);
     }
 
     .status-box.success {
       display: block;
-      background-color: #eefcf3;
-      border: 1px solid #bfe6cb;
+      background-color: #f4faf5;
+      border: 1px solid #c8dcca;
       color: var(--success);
     }
 
     .status-box.error {
       display: block;
-      background-color: #fff4f3;
-      border: 1px solid #f1c0bc;
+      background-color: #fff7f6;
+      border: 1px solid #edc7c3;
       color: var(--error);
     }
 
-    .footer-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
+    @media (max-width: 960px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
 
-    @media (max-width: 900px) {
+      .hero-side {
+        justify-content: flex-start;
+      }
+
       .content-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-card h1 {
-        font-size: 1.7rem;
+      .hero-stat-card {
+        max-width: 100%;
       }
     }
 
     @media (max-width: 700px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
       .nav-container {
         justify-content: center;
         padding: 12px 0;
@@ -353,6 +724,11 @@
         text-align: center;
       }
 
+      .brand::after {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       .nav-links {
         justify-content: center;
       }
@@ -360,126 +736,196 @@
       .hero-card,
       .info-panel,
       .form-panel {
-        padding: 22px;
+        padding: 24px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 1.85rem;
       }
     }
 
     @media (max-width: 480px) {
-      .hero-card h1 {
-        font-size: 1.45rem;
+      .page-wrapper {
+        margin-top: 24px;
+      }
+
+      .hero-card {
+        border-radius: 22px;
+        padding: 22px;
+      }
+
+      .hero-topline {
+        font-size: 0.72rem;
+        letter-spacing: 1.3px;
+      }
+
+      .hero-text h1 {
+        font-size: 1.58rem;
+      }
+
+      .hero-text p,
+      .sub-text,
+      .info-panel p {
+        font-size: 0.94rem;
       }
 
       .btn {
         width: 100%;
       }
+
+      .form-actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="brand">AutoMart Seller Portal</div>
-      <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Seller</a></li>
-        <li><a href="#" class="active">Register</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Add Car</a></li>
-        <li><a href="#">Search</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <main class="page-wrapper">
-    <section class="hero-card">
-      <h1>Seller Registration</h1>
-      <p>
-        Join our Online Car Sale platform and create your seller account to list vehicles, manage postings,
-        and connect with potential buyers in a professional marketplace.
-      </p>
-    </section>
-
-    <section class="content-grid">
-      <aside class="info-panel">
-        <h2>Why Register as a Seller?</h2>
-        <p>
-          Build your seller profile and start presenting your car listings with confidence through a clean
-          and trustworthy registration process.
-        </p>
-
-        <ul class="feature-list">
-          <li>
-            <strong>Trusted Seller Profile</strong>
-            <span>Create a professional seller identity for your car listings.</span>
-          </li>
-          <li>
-            <strong>Simple Registration</strong>
-            <span>Complete the form with instant validation and clear feedback.</span>
-          </li>
-          <li>
-            <strong>Ready for Listing</strong>
-            <span>Prepare your account for adding cars and managing sales activity.</span>
-          </li>
+  <div class="page-shell">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="brand">Online Car Sale</div>
+        <ul class="nav-links">
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="seller.html">Seller</a></li>
+          <li><a href="registration.html" class="active">Register</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="add-car.html">Add Car</a></li>
+          <li><a href="search.html">Search</a></li>
         </ul>
+      </div>
+    </nav>
 
-        <p class="footer-note">
-          Please fill in all required fields carefully. Only valid information will be accepted.
-        </p>
-      </aside>
+    <main class="page-wrapper">
+      <section class="hero-card">
+        <div class="hero-topline">Seller Access</div>
 
-      <section class="form-panel">
-        <h2>Create Seller Account</h2>
-        <p class="sub-text">All fields are required. Please enter valid details to complete registration.</p>
-
-        <form id="sellerForm" novalidate>
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" class="input-field" placeholder="Enter your full name" />
-              <div class="message" id="nameMessage"></div>
-            </div>
-
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="text" id="phone" class="input-field" placeholder="e.g. 13812345678" />
-              <div class="message" id="phoneMessage"></div>
-            </div>
-
-            <div class="form-group full-width">
-              <label for="address">Address</label>
-              <input type="text" id="address" class="input-field" placeholder="Enter your address" />
-              <div class="message" id="addressMessage"></div>
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="text" id="email" class="input-field" placeholder="Enter your email address" />
-              <div class="message" id="emailMessage"></div>
-            </div>
-
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" id="username" class="input-field" placeholder="At least 6 alphanumeric characters" />
-              <div class="message" id="usernameMessage"></div>
-            </div>
-
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" class="input-field" placeholder="At least 6 alphanumeric characters" />
-              <div class="message" id="passwordMessage"></div>
-            </div>
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>Seller Registration</h1>
+            <p>
+              Create your seller account with a clean and professional registration experience designed for a modern online car marketplace.
+              Present your details confidently and prepare your profile for vehicle listings.
+            </p>
           </div>
 
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Register</button>
-            <button type="reset" class="btn btn-secondary">Reset</button>
+          <div class="hero-side">
+            <div class="hero-stat-card">
+              <small>Registration Standards</small>
+              <strong>Accurate. Verified. Professional.</strong>
+              <span>
+                Complete the required information with valid details to build a polished seller presence before adding cars to the platform.
+              </span>
+            </div>
           </div>
-
-          <div id="formStatus" class="status-box"></div>
-        </form>
+        </div>
       </section>
-    </section>
-  </main>
+
+      <section class="content-grid">
+        <aside class="info-panel">
+          <div class="panel-shine"></div>
+          <h2>Why Register as a Seller?</h2>
+          <p>
+            This registration page helps sellers create a professional account before adding cars and managing
+            their sales activity on the website.
+          </p>
+
+          <ul class="feature-list">
+            <li>
+              <strong>Professional Seller Profile</strong>
+              <span>Build a seller identity for your vehicle listings in a simple and organized way.</span>
+            </li>
+            <li>
+              <strong>Clear Form Validation</strong>
+              <span>Receive immediate feedback with inline validation messages for every required field.</span>
+            </li>
+            <li>
+              <strong>Ready for Car Listings</strong>
+              <span>Complete registration first so you can continue to add and manage cars efficiently.</span>
+            </li>
+          </ul>
+
+          <p class="footer-note">
+            Please fill in all required information carefully. Only valid input will be accepted.
+          </p>
+        </aside>
+
+        <section class="form-panel">
+          <div class="panel-shine"></div>
+
+          <div class="form-header">
+            <div class="section-tag">Create Account</div>
+            <h2>Create Seller Account</h2>
+            <p class="sub-text">
+              All fields are required. Please enter valid details to complete registration.
+            </p>
+          </div>
+
+          <form id="sellerForm" novalidate>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <div class="input-wrap">
+                  <input type="text" id="name" class="input-field" placeholder="Enter your full name" />
+                </div>
+                <div class="message" id="nameMessage"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="input-wrap">
+                  <input type="text" id="phone" class="input-field" placeholder="e.g. 13812345678" />
+                </div>
+                <div class="message" id="phoneMessage"></div>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="address">Address</label>
+                <div class="input-wrap">
+                  <input type="text" id="address" class="input-field" placeholder="Enter your address" />
+                </div>
+                <div class="message" id="addressMessage"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrap">
+                  <input type="text" id="email" class="input-field" placeholder="Enter your email address" />
+                </div>
+                <div class="message" id="emailMessage"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrap">
+                  <input type="text" id="username" class="input-field" placeholder="At least 6 alphanumeric characters" />
+                </div>
+                <div class="message" id="usernameMessage"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                  <input type="password" id="password" class="input-field" placeholder="At least 6 alphanumeric characters" />
+                </div>
+                <div class="message" id="passwordMessage"></div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Register</button>
+              <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+
+            <div id="formStatus" class="status-box"></div>
+          </form>
+        </section>
+      </section>
+    </main>
+  </div>
 
   <script>
     const form = document.getElementById("sellerForm");
@@ -613,7 +1059,10 @@
       });
 
       fields[key].input.addEventListener("input", function () {
-        if (fields[key].input.classList.contains("invalid") || fields[key].input.classList.contains("valid")) {
+        if (
+          fields[key].input.classList.contains("invalid") ||
+          fields[key].input.classList.contains("valid")
+        ) {
           validateField(key);
         }
       });
