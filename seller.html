@@ -3,29 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seller Page | Online Car Sale</title>
+  <title>Online Car Sale | Seller</title>
   <style>
     :root {
-      --black: #0f0f10;
-      --charcoal: #18191b;
-      --dark-grey: #242628;
-      --mid-grey: #6f7479;
-      --light-grey: #d9dde1;
-      --silver: #b8bec5;
-      --white: #f7f8fa;
-      --line: rgba(255, 255, 255, 0.08);
-      --shadow-soft: 0 18px 50px rgba(0, 0, 0, 0.28);
-      --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.18);
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-      --transition: 0.35s ease;
+      --bg: #f3f3f3;
+      --surface: rgba(255, 255, 255, 0.94);
+      --surface-soft: #fafafa;
+      --surface-solid: #ffffff;
+      --surface-dark: #141414;
+      --text: #111111;
+      --text-muted: #676767;
+      --text-soft: #8b8b8b;
+      --border: #d8d8d8;
+      --border-strong: #bcbcbc;
+      --shadow-sm: 0 10px 22px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.12);
+      --shadow-dark: 0 26px 55px rgba(0, 0, 0, 0.22);
+      --glow: 0 0 0 1px rgba(255, 255, 255, 0.22) inset;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --silver-1: #ededed;
+      --silver-2: #d9d9d9;
+      --silver-3: #b9b9b9;
+      --transition: 0.3s ease;
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     html {
@@ -33,170 +41,233 @@
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      color: var(--white);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(184, 190, 197, 0.14), transparent 30%),
-        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.05), transparent 28%),
-        linear-gradient(135deg, #0c0c0d 0%, #141517 45%, #1e2023 100%);
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 30%),
+        linear-gradient(180deg, #ededed 0%, #f5f5f5 42%, #efefef 100%);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 85%);
-      z-index: 0;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
     .page-shell {
       position: relative;
-      z-index: 1;
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-      padding: 26px 0 44px;
+      isolation: isolate;
+    }
+
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      pointer-events: none;
+      border-radius: 50%;
+      filter: blur(55px);
+      opacity: 0.4;
+    }
+
+    .page-shell::before {
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.82);
+      top: 80px;
+      right: 3%;
+    }
+
+    .page-shell::after {
+      width: 280px;
+      height: 280px;
+      background: rgba(0, 0, 0, 0.05);
+      bottom: 30px;
+      left: 2%;
     }
 
     .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.78);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.035);
+    }
+
+    .nav-container {
+      width: min(1140px, 92%);
+      margin: 0 auto;
+      min-height: 76px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      padding: 16px 22px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      animation: fadeUp 0.8s ease both;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
     }
 
     .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .brand a {
-      text-decoration: none;
-      color: var(--white);
-      font-size: 1.45rem;
+      font-size: 1.34rem;
       font-weight: 700;
-      letter-spacing: 0.6px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text);
+      position: relative;
+      white-space: nowrap;
     }
 
-    .brand span {
-      color: var(--silver);
-      font-size: 0.82rem;
-      letter-spacing: 2.4px;
-      text-transform: uppercase;
+    .brand::after {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 2px;
+      margin-top: 6px;
+      background: linear-gradient(90deg, #111111, #8f8f8f);
+      border-radius: 999px;
     }
 
     .nav-links {
+      list-style: none;
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
       gap: 10px;
-      list-style: none;
     }
 
     .nav-links a {
-      text-decoration: none;
-      color: #e5e8eb;
-      font-size: 0.95rem;
-      padding: 10px 14px;
+      display: inline-block;
+      padding: 10px 15px;
       border-radius: 999px;
-      transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #222222;
+      transition: background-color var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
     }
 
-    .nav-links a:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--white);
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background-color: rgba(0, 0, 0, 0.05);
+      outline: none;
       transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
     }
 
-    .nav-links a.active {
-      background: linear-gradient(135deg, #d7dce2 0%, #9ea5ad 100%);
-      color: var(--black);
-      font-weight: 700;
-      box-shadow: 0 8px 18px rgba(184, 190, 197, 0.22);
+    .nav-links .active {
+      background: linear-gradient(180deg, #1c1c1c 0%, #111111 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
     }
 
-    .hero {
-      margin-top: 28px;
-      padding: 52px 42px;
-      border-radius: 28px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
-        linear-gradient(135deg, rgba(184, 190, 197, 0.08), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(255,255,255,0.09);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      overflow: hidden;
+    .page-wrapper {
+      width: min(1140px, 92%);
+      margin: 38px auto 56px;
+      animation: pageFade 0.8s ease both;
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-card {
       position: relative;
-      animation: fadeUp 0.9s ease 0.12s both;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
+        linear-gradient(135deg, #1b1b1b 0%, #111111 58%, #202020 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 38px 34px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-dark);
+      color: #ffffff;
+      isolation: isolate;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: -60px;
-      right: -100px;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, rgba(255,255,255,0.13), transparent 68%);
-      opacity: 0.7;
-    }
-
-    .hero::after {
+    .hero-card::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.035) 45%, transparent 100%);
+      background:
+        radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.02) 22%, rgba(255, 255, 255, 0) 40%),
+        linear-gradient(115deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 36%);
+      z-index: -1;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      right: -38px;
+      bottom: -30px;
+      width: 360px;
+      height: 160px;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 55%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+      border-radius: 120px 0 0 0;
+      transform: skewX(-18deg);
+      opacity: 0.85;
       pointer-events: none;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 780px;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      margin-bottom: 14px;
-      padding: 7px 14px;
-      border: 1px solid rgba(255,255,255,0.09);
+    .hero-topline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      color: var(--silver);
-      font-size: 0.8rem;
-      letter-spacing: 2px;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
+      margin-bottom: 18px;
+      box-shadow: var(--glow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    .hero h1 {
-      font-size: clamp(2rem, 4vw, 3.45rem);
-      line-height: 1.12;
-      margin-bottom: 16px;
+    .hero-topline::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffffff, #a8a8a8);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.35fr 0.8fr;
+      gap: 28px;
+      align-items: end;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2rem, 3vw, 2.85rem);
+      line-height: 1.1;
       letter-spacing: 0.4px;
+      margin-bottom: 14px;
+      font-weight: 700;
+      max-width: 620px;
     }
 
-    .hero p {
-      max-width: 690px;
-      color: #d5d9dd;
+    .hero-text p {
+      max-width: 620px;
+      color: rgba(255, 255, 255, 0.76);
       font-size: 1rem;
-      line-height: 1.8;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .hero-actions {
@@ -206,162 +277,127 @@
     }
 
     .btn {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 13px 24px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.25px;
+      cursor: pointer;
+      transition: transform 0.26s ease, box-shadow 0.26s ease, background-color 0.26s ease, border-color 0.26s ease, color 0.26s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      text-decoration: none;
-      border-radius: 999px;
-      padding: 13px 22px;
-      font-weight: 700;
-      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition), border-color var(--transition);
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #eef1f4 0%, #b7bec6 100%);
-      color: var(--black);
-      box-shadow: 0 10px 24px rgba(184, 190, 197, 0.25);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 30px rgba(184, 190, 197, 0.3);
-    }
-
-    .btn-secondary {
-      color: var(--white);
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.04);
-    }
-
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.22);
-    }
-
-    .services {
-      margin-top: 34px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .service-card {
-      position: relative;
-      padding: 28px 24px;
-      border-radius: var(--radius-lg);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow-card);
-      overflow: hidden;
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
-      animation: fadeUp 0.9s ease both;
-    }
-
-    .service-card:nth-child(1) { animation-delay: 0.2s; }
-    .service-card:nth-child(2) { animation-delay: 0.32s; }
-    .service-card:nth-child(3) { animation-delay: 0.44s; }
-
-    .service-card::before {
+    .btn::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(145deg, rgba(255,255,255,0.06), transparent 55%);
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 45%);
       opacity: 0;
-      transition: opacity var(--transition);
+      transition: opacity 0.26s ease;
       pointer-events: none;
     }
 
-    .service-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(255,255,255,0.16);
-      box-shadow: 0 18px 38px rgba(0,0,0,0.28);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.045));
-    }
-
-    .service-card:hover::before {
+    .btn:hover::before {
       opacity: 1;
     }
 
-    .card-top {
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 100%);
+      color: #111111;
+      box-shadow: 0 14px 26px rgba(255, 255, 255, 0.08), 0 14px 26px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.07);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.14);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .hero-side {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 22px;
-      gap: 12px;
+      justify-content: flex-end;
+      align-items: end;
     }
 
-    .card-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--white);
-      font-size: 1.3rem;
-      font-weight: 700;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    .hero-stat-card {
+      width: 100%;
+      max-width: 280px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 18px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 36px rgba(0, 0, 0, 0.18);
     }
 
-    .card-label {
-      color: var(--silver);
-      font-size: 0.8rem;
-      letter-spacing: 2px;
+    .hero-stat-card small {
+      display: block;
+      color: rgba(255, 255, 255, 0.62);
       text-transform: uppercase;
-      white-space: nowrap;
+      letter-spacing: 1.6px;
+      font-size: 0.72rem;
+      margin-bottom: 10px;
     }
 
-    .service-card h2 {
-      font-size: 1.35rem;
-      margin-bottom: 12px;
-      color: var(--white);
-    }
-
-    .service-card p {
-      color: #cfd4d8;
-      line-height: 1.75;
-      font-size: 0.96rem;
-      margin-bottom: 26px;
-      min-height: 84px;
-    }
-
-    .card-link {
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--white);
+    .hero-stat-card strong {
+      display: block;
+      font-size: 1.18rem;
       font-weight: 700;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      transition: transform var(--transition), background var(--transition), border-color var(--transition), color var(--transition);
+      margin-bottom: 8px;
+      color: #ffffff;
     }
 
-    .card-link:hover {
-      transform: translateX(4px);
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.22);
-    }
-
-    .page-footer {
-      margin-top: 34px;
-      padding: 18px 8px 6px;
-      text-align: center;
-      color: #a8afb6;
+    .hero-stat-card span {
+      display: block;
+      color: rgba(255, 255, 255, 0.74);
       font-size: 0.92rem;
-      animation: fadeUp 0.9s ease 0.56s both;
+      line-height: 1.6;
     }
 
-    @keyframes fadeUp {
+    .services-section {
+      display: grid;
+      grid-template-columns: 0.88fr 1.32fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .intro-panel,
+    .cards-panel {
+      position: relative;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
+      animation: liftIn 0.75s ease both;
+    }
+
+    .cards-panel {
+      animation-delay: 0.08s;
+    }
+
+    @keyframes liftIn {
       from {
         opacity: 0;
-        transform: translateY(26px);
+        transform: translateY(24px);
       }
       to {
         opacity: 1;
@@ -369,17 +405,258 @@
       }
     }
 
-    @media (max-width: 980px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
+    .intro-panel:hover,
+    .cards-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-shine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(130deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08) 24%, rgba(255, 255, 255, 0) 46%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 24%);
+      opacity: 0.7;
+    }
+
+    .intro-panel {
+      padding: 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 248, 0.95)),
+        var(--surface-solid);
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      background: rgba(255, 255, 255, 0.82);
+      color: #444444;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.7px;
+      font-weight: 700;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #111111, #9a9a9a);
+    }
+
+    .intro-panel h2,
+    .cards-panel h2 {
+      font-size: 1.45rem;
+      letter-spacing: 0.2px;
+      margin-bottom: 12px;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro-panel p {
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding: 18px 18px 18px 20px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(245, 245, 245, 0.96));
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+
+    .feature-list li::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 0;
+      width: 4px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #111111, #9b9b9b);
+    }
+
+    .feature-list li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-list strong {
+      display: block;
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 5px;
+      letter-spacing: 0.15px;
+    }
+
+    .feature-list span {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cards-panel {
+      padding: 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(252, 252, 252, 0.95)),
+        var(--surface-solid);
+    }
+
+    .cards-header {
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cards-header p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-card {
+      position: relative;
+      padding: 22px 20px;
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.98));
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 45%);
+      pointer-events: none;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.09);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .service-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #1d1d1d 0%, #111111 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 16px;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.14);
+    }
+
+    .service-card h3 {
+      font-size: 1.14rem;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.65;
+      margin-bottom: 18px;
+      min-height: 94px;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #fbfbfb 0%, #f0f0f0 100%);
+      border: 1px solid #d8d8d8;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.94rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background-color var(--transition);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .service-link:hover {
+      transform: translateX(4px);
+      border-color: #c6c6c6;
+      box-shadow: 0 16px 28px rgba(0, 0, 0, 0.07);
+      background: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
+    }
+
+    .page-footer {
+      text-align: center;
+      padding: 24px 0 8px;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 960px) {
+      .hero-content,
+      .services-section {
+        grid-template-columns: 1fr;
+        gap: 22px;
       }
 
-      .nav-links {
-        width: 100%;
+      .hero-side {
+        justify-content: flex-start;
       }
 
-      .services {
+      .hero-stat-card {
+        max-width: 100%;
+      }
+
+      .service-grid {
         grid-template-columns: 1fr;
       }
 
@@ -388,68 +665,82 @@
       }
     }
 
-    @media (max-width: 768px) {
-      .page-shell {
-        width: min(100% - 24px, 1180px);
-        padding-top: 18px;
+    @media (max-width: 700px) {
+      .nav-container {
+        justify-content: center;
+        padding: 12px 0;
       }
 
-      .navbar {
-        padding: 16px;
+      .brand {
+        width: 100%;
+        text-align: center;
       }
 
-      .hero {
-        padding: 36px 24px;
+      .brand::after {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      .hero-card,
+      .intro-panel,
+      .cards-panel {
+        padding: 24px;
+      }
+
+      .hero-text h1 {
+        font-size: 1.85rem;
       }
 
       .hero-actions {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-wrapper {
+        margin-top: 24px;
+      }
+
+      .hero-card {
+        border-radius: 22px;
+        padding: 22px;
+      }
+
+      .hero-topline {
+        font-size: 0.72rem;
+        letter-spacing: 1.3px;
+      }
+
+      .hero-text h1 {
+        font-size: 1.58rem;
+      }
+
+      .hero-text p,
+      .intro-panel p,
+      .cards-header p {
+        font-size: 0.94rem;
       }
 
       .btn {
         width: 100%;
       }
 
-      .nav-links {
-        gap: 8px;
-      }
-
-      .nav-links a {
-        font-size: 0.92rem;
-        padding: 9px 12px;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .brand a {
-        font-size: 1.25rem;
-      }
-
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .hero p,
-      .service-card p {
-        font-size: 0.93rem;
-      }
-
       .service-card {
-        padding: 22px 18px;
+        padding: 20px 18px;
       }
     }
   </style>
 </head>
 <body>
   <div class="page-shell">
-    <header class="navbar">
-      <div class="brand">
-        <a href="homepage.html">Online Car Sale</a>
-        <span>Seller Access</span>
-      </div>
-
-      <nav aria-label="Main Navigation">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="brand">Online Car Sale</div>
         <ul class="nav-links">
           <li><a href="homepage.html">Home</a></li>
           <li><a href="seller.html" class="active">Seller</a></li>
@@ -458,86 +749,115 @@
           <li><a href="add-car.html">Add Car</a></li>
           <li><a href="search.html">Search</a></li>
         </ul>
-      </nav>
-    </header>
+      </div>
+    </nav>
 
-    <main>
-      <section class="hero">
+    <main class="page-wrapper">
+      <section class="hero-card">
+        <div class="hero-topline">Seller Access</div>
+
         <div class="hero-content">
-          <span class="hero-tag">Premium Seller Services</span>
-          <h1>Start Selling with Confidence</h1>
-          <p>
-            Access the essential seller services for Online Car Sale in one refined entry page.
-            Register your account, sign in securely, and continue to add your vehicle listing with
-            a clean and premium automotive-inspired experience.
-          </p>
+          <div class="hero-text">
+            <h1>Start Your Seller Journey</h1>
+            <p>
+              Access the essential seller services of Online Car Sale through a clean and premium entry page.
+              Continue smoothly to registration, login, or add your car listing with a refined automotive-inspired experience.
+            </p>
 
-          <div class="hero-actions">
-            <a href="registration.html" class="btn btn-primary">Register as Seller</a>
-            <a href="add-car.html" class="btn btn-secondary">Add Your Car</a>
+            <div class="hero-actions">
+              <a href="registration.html" class="btn btn-primary">Register Now</a>
+              <a href="add-car.html" class="btn btn-secondary">Add Car</a>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="hero-stat-card">
+              <small>Seller Entry</small>
+              <strong>Clear. Professional. Direct.</strong>
+              <span>
+                Move to the next step quickly with streamlined access to the main seller functions needed before listing vehicles.
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="services">
-        <article class="service-card">
-          <div class="card-top">
-            <div class="card-icon">01</div>
-            <span class="card-label">Create Access</span>
-          </div>
-          <h2>Seller Registration</h2>
+      <section class="services-section">
+        <aside class="intro-panel">
+          <div class="panel-shine"></div>
+          <div class="section-tag">Seller Services</div>
+          <h2>Your Seller Access Point</h2>
           <p>
-            Create your seller account to begin managing your vehicle listings with a professional
-            and structured selling experience on the platform.
+            This page is designed as a clean entry area for sellers. Choose the appropriate next step below
+            to create an account, sign in, or continue to add your vehicle details.
           </p>
-          <a href="registration.html" class="card-link">Go to Registration <span>&rarr;</span></a>
-        </article>
 
-        <article class="service-card">
-          <div class="card-top">
-            <div class="card-icon">02</div>
-            <span class="card-label">Secure Entry</span>
-          </div>
-          <h2>Seller Login</h2>
-          <p>
-            Sign in to continue your seller journey, access your account, and move smoothly to the
-            next step of posting your vehicle details.
-          </p>
-          <a href="login.html" class="card-link">Go to Login <span>&rarr;</span></a>
-        </article>
+          <ul class="feature-list">
+            <li>
+              <strong>Registration Access</strong>
+              <span>Create a seller account to begin using the platform in a structured and professional way.</span>
+            </li>
+            <li>
+              <strong>Secure Login</strong>
+              <span>Return to your seller account and continue your progress with simple and direct access.</span>
+            </li>
+            <li>
+              <strong>Vehicle Listing Flow</strong>
+              <span>Proceed to the add car page when you are ready to submit vehicle information for listing.</span>
+            </li>
+          </ul>
 
-        <article class="service-card">
-          <div class="card-top">
-            <div class="card-icon">03</div>
-            <span class="card-label">List Vehicle</span>
-          </div>
-          <h2>Add Car</h2>
-          <p>
-            Ready to list a vehicle? Proceed to the add car page and enter the required details to
-            showcase your car clearly to potential buyers.
+          <p class="footer-note">
+            Select one of the service options to continue your seller process with clarity and confidence.
           </p>
-          <a href="add-car.html" class="card-link">Go to Add Car <span>&rarr;</span></a>
-        </article>
+        </aside>
+
+        <section class="cards-panel">
+          <div class="panel-shine"></div>
+
+          <div class="cards-header">
+            <div class="section-tag">Continue</div>
+            <h2>Choose a Seller Service</h2>
+            <p>
+              Each option below provides direct access to the next seller action on the website.
+            </p>
+          </div>
+
+          <div class="service-grid">
+            <article class="service-card">
+              <div class="service-number">01</div>
+              <h3>Registration</h3>
+              <p>
+                Create your seller account to begin using the system and prepare your profile for future vehicle listings.
+              </p>
+              <a href="registration.html" class="service-link">Go to Registration →</a>
+            </article>
+
+            <article class="service-card">
+              <div class="service-number">02</div>
+              <h3>Login</h3>
+              <p>
+                Sign in to your seller account and continue your journey with secure access to seller functions and pages.
+              </p>
+              <a href="login.html" class="service-link">Go to Login →</a>
+            </article>
+
+            <article class="service-card">
+              <div class="service-number">03</div>
+              <h3>Add Car</h3>
+              <p>
+                Ready to sell a vehicle? Proceed to the add car page and submit the information needed for listing.
+              </p>
+              <a href="add-car.html" class="service-link">Go to Add Car →</a>
+            </article>
+          </div>
+        </section>
       </section>
+
+      <footer class="page-footer">
+        <p>&copy; 2026 Online Car Sale. Premium seller access for a modern automotive marketplace.</p>
+      </footer>
     </main>
-
-    <footer class="page-footer">
-      <p>&copy; 2026 Online Car Sale. Premium seller access for a modern automotive marketplace.</p>
-    </footer>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var cards = document.querySelectorAll(".service-card");
-      cards.forEach(function (card) {
-        card.addEventListener("mouseenter", function () {
-          card.style.transform = "translateY(-8px)";
-        });
-        card.addEventListener("mouseleave", function () {
-          card.style.transform = "";
-        });
-      });
-    });
-  </script>
 </body>
 </html>
