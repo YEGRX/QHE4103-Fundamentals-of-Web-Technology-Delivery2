@@ -3,35 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Online Car Sale | Seller Registration</title>
+  <title>Online Car Sale | Seller</title>
   <style>
     :root {
       --bg: #f3f3f3;
       --surface: rgba(255, 255, 255, 0.94);
-      --surface-solid: #ffffff;
       --surface-soft: #fafafa;
+      --surface-solid: #ffffff;
       --surface-dark: #141414;
       --text: #111111;
       --text-muted: #676767;
       --text-soft: #8b8b8b;
       --border: #d8d8d8;
       --border-strong: #bcbcbc;
-      --line: rgba(255, 255, 255, 0.08);
       --shadow-sm: 0 10px 22px rgba(0, 0, 0, 0.05);
       --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.08);
       --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.12);
-      --shadow-dark: 0 26px 55px rgba(0, 0, 0, 0.32);
+      --shadow-dark: 0 26px 55px rgba(0, 0, 0, 0.22);
       --glow: 0 0 0 1px rgba(255, 255, 255, 0.22) inset;
-      --radius-xl: 24px;
-      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
       --radius-md: 14px;
-      --success: #2f6b3d;
-      --error: #b42318;
-      --focus-ring: rgba(255, 255, 255, 0.22);
-      --dark-focus: rgba(0, 0, 0, 0.08);
       --silver-1: #ededed;
       --silver-2: #d9d9d9;
       --silver-3: #b9b9b9;
+      --transition: 0.3s ease;
     }
 
     * {
@@ -47,7 +43,7 @@
     body {
       font-family: "Segoe UI", Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 32%),
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 30%),
         linear-gradient(180deg, #ededed 0%, #f5f5f5 42%, #efefef 100%);
       color: var(--text);
       line-height: 1.5;
@@ -73,22 +69,22 @@
       pointer-events: none;
       border-radius: 50%;
       filter: blur(55px);
-      opacity: 0.42;
+      opacity: 0.4;
     }
 
     .page-shell::before {
-      width: 240px;
-      height: 240px;
-      background: rgba(255, 255, 255, 0.8);
-      top: 90px;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.82);
+      top: 80px;
       right: 3%;
     }
 
     .page-shell::after {
-      width: 260px;
-      height: 260px;
+      width: 280px;
+      height: 280px;
       background: rgba(0, 0, 0, 0.05);
-      bottom: 40px;
+      bottom: 30px;
       left: 2%;
     }
 
@@ -148,8 +144,7 @@
       font-size: 0.96rem;
       font-weight: 600;
       color: #222222;
-      transition: background-color 0.28s ease, color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
-      position: relative;
+      transition: background-color var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
     }
 
     .nav-links a:hover,
@@ -188,8 +183,8 @@
       overflow: hidden;
       background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
-        linear-gradient(135deg, #1b1b1b 0%, #101010 58%, #1d1d1d 100%);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+        linear-gradient(135deg, #1b1b1b 0%, #111111 58%, #202020 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 38px 34px;
       margin-bottom: 28px;
@@ -211,8 +206,8 @@
     .hero-card::after {
       content: "";
       position: absolute;
-      right: -40px;
-      bottom: -28px;
+      right: -38px;
+      bottom: -30px;
       width: 360px;
       height: 160px;
       background:
@@ -220,7 +215,7 @@
         linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
       border-radius: 120px 0 0 0;
       transform: skewX(-18deg);
-      opacity: 0.8;
+      opacity: 0.85;
       pointer-events: none;
     }
 
@@ -272,6 +267,64 @@
       max-width: 620px;
       color: rgba(255, 255, 255, 0.76);
       font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 13px 24px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.25px;
+      cursor: pointer;
+      transition: transform 0.26s ease, box-shadow 0.26s ease, background-color 0.26s ease, border-color 0.26s ease, color 0.26s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 45%);
+      opacity: 0;
+      transition: opacity 0.26s ease;
+      pointer-events: none;
+    }
+
+    .btn:hover::before {
+      opacity: 1;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 100%);
+      color: #111111;
+      box-shadow: 0 14px 26px rgba(255, 255, 255, 0.08), 0 14px 26px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.07);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.14);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.11);
     }
 
     .hero-side {
@@ -286,7 +339,7 @@
       background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
-      padding: 18px 18px;
+      padding: 18px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 36px rgba(0, 0, 0, 0.18);
@@ -303,7 +356,7 @@
 
     .hero-stat-card strong {
       display: block;
-      font-size: 1.2rem;
+      font-size: 1.18rem;
       font-weight: 700;
       margin-bottom: 8px;
       color: #ffffff;
@@ -316,15 +369,15 @@
       line-height: 1.6;
     }
 
-    .content-grid {
+    .services-section {
       display: grid;
-      grid-template-columns: 0.92fr 1.28fr;
+      grid-template-columns: 0.88fr 1.32fr;
       gap: 24px;
       align-items: start;
     }
 
-    .info-panel,
-    .form-panel {
+    .intro-panel,
+    .cards-panel {
       position: relative;
       border-radius: var(--radius-xl);
       border: 1px solid rgba(0, 0, 0, 0.06);
@@ -337,7 +390,7 @@
       animation: liftIn 0.75s ease both;
     }
 
-    .form-panel {
+    .cards-panel {
       animation-delay: 0.08s;
     }
 
@@ -352,8 +405,8 @@
       }
     }
 
-    .info-panel:hover,
-    .form-panel:hover {
+    .intro-panel:hover,
+    .cards-panel:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
       border-color: rgba(0, 0, 0, 0.1);
@@ -369,15 +422,43 @@
       opacity: 0.7;
     }
 
-    .info-panel {
+    .intro-panel {
       padding: 30px;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 248, 0.95)),
         var(--surface-solid);
     }
 
-    .info-panel h2,
-    .form-panel h2 {
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      background: rgba(255, 255, 255, 0.82);
+      color: #444444;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.7px;
+      font-weight: 700;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #111111, #9a9a9a);
+    }
+
+    .intro-panel h2,
+    .cards-panel h2 {
       font-size: 1.45rem;
       letter-spacing: 0.2px;
       margin-bottom: 12px;
@@ -386,15 +467,11 @@
       z-index: 1;
     }
 
-    .info-panel p,
-    .sub-text {
+    .intro-panel p {
       color: var(--text-muted);
+      margin-bottom: 22px;
       position: relative;
       z-index: 1;
-    }
-
-    .info-panel p {
-      margin-bottom: 22px;
     }
 
     .feature-list {
@@ -455,247 +532,118 @@
       z-index: 1;
     }
 
-    .form-panel {
+    .cards-panel {
       padding: 30px;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(252, 252, 252, 0.95)),
         var(--surface-solid);
     }
 
-    .form-header {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .cards-header {
       margin-bottom: 22px;
       position: relative;
       z-index: 1;
     }
 
-    .section-tag {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      gap: 8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 0, 0, 0.07);
-      background: rgba(255, 255, 255, 0.8);
-      color: #444444;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1.7px;
-      font-weight: 700;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
-    }
-
-    .section-tag::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, #111111, #9a9a9a);
-    }
-
-    .sub-text {
+    .cards-header p {
+      color: var(--text-muted);
       font-size: 0.96rem;
     }
 
-    .form-grid {
+    .service-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
       position: relative;
       z-index: 1;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
+    .service-card {
       position: relative;
-    }
-
-    .form-group.full-width {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-weight: 700;
-      color: #191919;
-      margin-bottom: 8px;
-      letter-spacing: 0.15px;
-    }
-
-    .input-wrap {
-      position: relative;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 14px 15px;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      font-size: 1rem;
+      padding: 22px 20px;
+      border-radius: 20px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 249, 249, 0.98));
-      color: var(--text);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
-      transition:
-        border-color 0.24s ease,
-        box-shadow 0.24s ease,
-        transform 0.24s ease,
-        background-color 0.24s ease;
-    }
-
-    .input-field:hover {
-      border-color: var(--border-strong);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.65),
-        0 10px 18px rgba(0, 0, 0, 0.035);
-      transform: translateY(-1px);
-    }
-
-    .input-field:focus {
-      outline: none;
-      border-color: #3b3b3b;
-      background: #ffffff;
-      box-shadow:
-        0 0 0 4px rgba(0, 0, 0, 0.06),
-        0 16px 28px rgba(0, 0, 0, 0.06);
-      transform: translateY(-1px);
-    }
-
-    .input-field::placeholder {
-      color: #9a9a9a;
-    }
-
-    .input-field.valid {
-      border-color: var(--success);
-      background-color: #f7fbf8;
-    }
-
-    .input-field.invalid {
-      border-color: var(--error);
-      background-color: #fff8f7;
-    }
-
-    .message {
-      min-height: 18px;
-      margin-top: 7px;
-      padding-left: 2px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.1px;
-    }
-
-    .message.success {
-      color: var(--success);
-    }
-
-    .message.error {
-      color: var(--error);
-    }
-
-    .form-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 26px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn {
-      position: relative;
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.98));
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
       overflow: hidden;
-      border: 1px solid transparent;
-      border-radius: 999px;
-      padding: 13px 24px;
-      font-size: 0.98rem;
-      font-weight: 700;
-      letter-spacing: 0.25px;
-      cursor: pointer;
-      transition:
-        transform 0.26s ease,
-        box-shadow 0.26s ease,
-        background-color 0.26s ease,
-        border-color 0.26s ease,
-        color 0.26s ease;
     }
 
-    .btn::before {
+    .service-card::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 45%);
-      opacity: 0;
-      transition: opacity 0.26s ease;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 45%);
       pointer-events: none;
     }
 
-    .btn:hover::before {
-      opacity: 1;
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.09);
+      border-color: rgba(0, 0, 0, 0.1);
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn:focus {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
-    }
-
-    .btn-primary {
-      background: linear-gradient(180deg, #1d1d1d 0%, #101010 100%);
+    .service-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #1d1d1d 0%, #111111 100%);
       color: #ffffff;
-      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 16px;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.14);
     }
 
-    .btn-primary:hover {
-      background: linear-gradient(180deg, #292929 0%, #141414 100%);
-      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-secondary {
-      background: linear-gradient(180deg, #fbfbfb 0%, #f0f0f0 100%);
+    .service-card h3 {
+      font-size: 1.14rem;
       color: var(--text);
-      border-color: #d8d8d8;
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.65;
+      margin-bottom: 18px;
+      min-height: 94px;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #fbfbfb 0%, #f0f0f0 100%);
+      border: 1px solid #d8d8d8;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.94rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background-color var(--transition);
       box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
     }
 
-    .btn-secondary:hover {
-      background: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
+    .service-link:hover {
+      transform: translateX(4px);
       border-color: #c6c6c6;
       box-shadow: 0 16px 28px rgba(0, 0, 0, 0.07);
+      background: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
     }
 
-    .status-box {
-      margin-top: 22px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      display: none;
-      font-weight: 700;
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.04);
-    }
-
-    .status-box.success {
-      display: block;
-      background-color: #f4faf5;
-      border: 1px solid #c8dcca;
-      color: var(--success);
-    }
-
-    .status-box.error {
-      display: block;
-      background-color: #fff7f6;
-      border: 1px solid #edc7c3;
-      color: var(--error);
+    .page-footer {
+      text-align: center;
+      padding: 24px 0 8px;
+      color: var(--text-soft);
+      font-size: 0.92rem;
     }
 
     @media (max-width: 960px) {
-      .hero-content {
+      .hero-content,
+      .services-section {
         grid-template-columns: 1fr;
         gap: 22px;
       }
@@ -704,12 +652,16 @@
         justify-content: flex-start;
       }
 
-      .content-grid {
+      .hero-stat-card {
+        max-width: 100%;
+      }
+
+      .service-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-stat-card {
-        max-width: 100%;
+      .service-card p {
+        min-height: auto;
       }
     }
 
@@ -734,17 +686,18 @@
       }
 
       .hero-card,
-      .info-panel,
-      .form-panel {
+      .intro-panel,
+      .cards-panel {
         padding: 24px;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
       }
 
       .hero-text h1 {
         font-size: 1.85rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
 
@@ -768,8 +721,8 @@
       }
 
       .hero-text p,
-      .sub-text,
-      .info-panel p {
+      .intro-panel p,
+      .cards-header p {
         font-size: 0.94rem;
       }
 
@@ -777,8 +730,8 @@
         width: 100%;
       }
 
-      .form-actions {
-        flex-direction: column;
+      .service-card {
+        padding: 20px 18px;
       }
     }
   </style>
@@ -790,8 +743,8 @@
         <div class="brand">Online Car Sale</div>
         <ul class="nav-links">
           <li><a href="homepage.html">Home</a></li>
-          <li><a href="seller.html">Seller</a></li>
-          <li><a href="registration.html" class="active">Register</a></li>
+          <li><a href="seller.html" class="active">Seller</a></li>
+          <li><a href="registration.html">Registration</a></li>
           <li><a href="login.html">Login</a></li>
           <li><a href="add-car.html">Add Car</a></li>
           <li><a href="search.html">Search</a></li>
@@ -805,294 +758,106 @@
 
         <div class="hero-content">
           <div class="hero-text">
-            <h1>Seller Registration</h1>
+            <h1>Start Your Seller Journey</h1>
             <p>
-              Create your seller account with a clean and professional registration experience designed for a modern online car marketplace.
-              Present your details confidently and prepare your profile for vehicle listings.
+              Access the essential seller services of Online Car Sale through a clean and premium entry page.
+              Continue smoothly to registration, login, or add your car listing with a refined automotive-inspired experience.
             </p>
+
+            <div class="hero-actions">
+              <a href="registration.html" class="btn btn-primary">Register Now</a>
+              <a href="add-car.html" class="btn btn-secondary">Add Car</a>
+            </div>
           </div>
 
           <div class="hero-side">
             <div class="hero-stat-card">
-              <small>Registration Standards</small>
-              <strong>Accurate. Verified. Professional.</strong>
+              <small>Seller Entry</small>
+              <strong>Clear. Professional. Direct.</strong>
               <span>
-                Complete the required information with valid details to build a polished seller presence before adding cars to the platform.
+                Move to the next step quickly with streamlined access to the main seller functions needed before listing vehicles.
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="content-grid">
-        <aside class="info-panel">
+      <section class="services-section">
+        <aside class="intro-panel">
           <div class="panel-shine"></div>
-          <h2>Why Register as a Seller?</h2>
+          <div class="section-tag">Seller Services</div>
+          <h2>Your Seller Access Point</h2>
           <p>
-            This registration page helps sellers create a professional account before adding cars and managing
-            their sales activity on the website.
+            This page is designed as a clean entry area for sellers. Choose the appropriate next step below
+            to create an account, sign in, or continue to add your vehicle details.
           </p>
 
           <ul class="feature-list">
             <li>
-              <strong>Professional Seller Profile</strong>
-              <span>Build a seller identity for your vehicle listings in a simple and organized way.</span>
+              <strong>Registration Access</strong>
+              <span>Create a seller account to begin using the platform in a structured and professional way.</span>
             </li>
             <li>
-              <strong>Clear Form Validation</strong>
-              <span>Receive immediate feedback with inline validation messages for every required field.</span>
+              <strong>Secure Login</strong>
+              <span>Return to your seller account and continue your progress with simple and direct access.</span>
             </li>
             <li>
-              <strong>Ready for Car Listings</strong>
-              <span>Complete registration first so you can continue to add and manage cars efficiently.</span>
+              <strong>Vehicle Listing Flow</strong>
+              <span>Proceed to the add car page when you are ready to submit vehicle information for listing.</span>
             </li>
           </ul>
 
           <p class="footer-note">
-            Please fill in all required information carefully. Only valid input will be accepted.
+            Select one of the service options to continue your seller process with clarity and confidence.
           </p>
         </aside>
 
-        <section class="form-panel">
+        <section class="cards-panel">
           <div class="panel-shine"></div>
 
-          <div class="form-header">
-            <div class="section-tag">Create Account</div>
-            <h2>Create Seller Account</h2>
-            <p class="sub-text">
-              All fields are required. Please enter valid details to complete registration.
+          <div class="cards-header">
+            <div class="section-tag">Continue</div>
+            <h2>Choose a Seller Service</h2>
+            <p>
+              Each option below provides direct access to the next seller action on the website.
             </p>
           </div>
 
-          <form id="sellerForm" novalidate>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <div class="input-wrap">
-                  <input type="text" id="name" class="input-field" placeholder="Enter your full name" />
-                </div>
-                <div class="message" id="nameMessage"></div>
-              </div>
+          <div class="service-grid">
+            <article class="service-card">
+              <div class="service-number">01</div>
+              <h3>Registration</h3>
+              <p>
+                Create your seller account to begin using the system and prepare your profile for future vehicle listings.
+              </p>
+              <a href="registration.html" class="service-link">Go to Registration →</a>
+            </article>
 
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <div class="input-wrap">
-                  <input type="text" id="phone" class="input-field" placeholder="e.g. 13812345678" />
-                </div>
-                <div class="message" id="phoneMessage"></div>
-              </div>
+            <article class="service-card">
+              <div class="service-number">02</div>
+              <h3>Login</h3>
+              <p>
+                Sign in to your seller account and continue your journey with secure access to seller functions and pages.
+              </p>
+              <a href="login.html" class="service-link">Go to Login →</a>
+            </article>
 
-              <div class="form-group full-width">
-                <label for="address">Address</label>
-                <div class="input-wrap">
-                  <input type="text" id="address" class="input-field" placeholder="Enter your address" />
-                </div>
-                <div class="message" id="addressMessage"></div>
-              </div>
-
-              <div class="form-group">
-                <label for="email">Email Address</label>
-                <div class="input-wrap">
-                  <input type="text" id="email" class="input-field" placeholder="Enter your email address" />
-                </div>
-                <div class="message" id="emailMessage"></div>
-              </div>
-
-              <div class="form-group">
-                <label for="username">Username</label>
-                <div class="input-wrap">
-                  <input type="text" id="username" class="input-field" placeholder="At least 6 alphanumeric characters" />
-                </div>
-                <div class="message" id="usernameMessage"></div>
-              </div>
-
-              <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-wrap">
-                  <input type="password" id="password" class="input-field" placeholder="At least 6 alphanumeric characters" />
-                </div>
-                <div class="message" id="passwordMessage"></div>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Register</button>
-              <button type="reset" class="btn btn-secondary">Reset</button>
-            </div>
-
-            <div id="formStatus" class="status-box"></div>
-          </form>
+            <article class="service-card">
+              <div class="service-number">03</div>
+              <h3>Add Car</h3>
+              <p>
+                Ready to sell a vehicle? Proceed to the add car page and submit the information needed for listing.
+              </p>
+              <a href="add-car.html" class="service-link">Go to Add Car →</a>
+            </article>
+          </div>
         </section>
       </section>
+
+      <footer class="page-footer">
+        <p>&copy; 2026 Online Car Sale. Premium seller access for a modern automotive marketplace.</p>
+      </footer>
     </main>
   </div>
-
-  <script>
-    const form = document.getElementById("sellerForm");
-    const formStatus = document.getElementById("formStatus");
-
-    const fields = {
-      name: {
-        input: document.getElementById("name"),
-        message: document.getElementById("nameMessage"),
-        validate: function () {
-          const value = this.input.value.trim();
-          const pattern = /^[A-Za-z\s]+$/;
-          if (value === "") {
-            return { valid: false, text: "Name is required." };
-          }
-          if (!pattern.test(value)) {
-            return { valid: false, text: "Name can contain only alphabetical letters and spaces." };
-          }
-          return { valid: true, text: "Valid name." };
-        }
-      },
-      address: {
-        input: document.getElementById("address"),
-        message: document.getElementById("addressMessage"),
-        validate: function () {
-          const value = this.input.value.trim();
-          const pattern = /^[A-Za-z0-9\s]+$/;
-          if (value === "") {
-            return { valid: false, text: "Address is required." };
-          }
-          if (!pattern.test(value)) {
-            return { valid: false, text: "Address can contain only alphanumeric characters and spaces." };
-          }
-          return { valid: true, text: "Valid address." };
-        }
-      },
-      phone: {
-        input: document.getElementById("phone"),
-        message: document.getElementById("phoneMessage"),
-        validate: function () {
-          const value = this.input.value.trim();
-          const pattern = /^(?:\+?86)?1[3-9]\d{9}$/;
-          if (value === "") {
-            return { valid: false, text: "Phone number is required." };
-          }
-          if (!pattern.test(value)) {
-            return { valid: false, text: "Please enter a valid China phone number." };
-          }
-          return { valid: true, text: "Valid phone number." };
-        }
-      },
-      email: {
-        input: document.getElementById("email"),
-        message: document.getElementById("emailMessage"),
-        validate: function () {
-          const value = this.input.value.trim();
-          const pattern = /^[^\s@]+@[^\s@]+\.(cn|com)$/i;
-          const atCount = (value.match(/@/g) || []).length;
-
-          if (value === "") {
-            return { valid: false, text: "Email address is required." };
-          }
-          if (atCount !== 1) {
-            return { valid: false, text: "Email address must contain @ exactly once." };
-          }
-          if (!pattern.test(value)) {
-            return { valid: false, text: "Email must end with .cn or .com." };
-          }
-          return { valid: true, text: "Valid email address." };
-        }
-      },
-      username: {
-        input: document.getElementById("username"),
-        message: document.getElementById("usernameMessage"),
-        validate: function () {
-          const value = this.input.value.trim();
-          const pattern = /^[A-Za-z0-9]{6,}$/;
-          if (value === "") {
-            return { valid: false, text: "Username is required." };
-          }
-          if (!pattern.test(value)) {
-            return { valid: false, text: "Username must be at least 6 alphanumeric characters." };
-          }
-          return { valid: true, text: "Valid username." };
-        }
-      },
-      password: {
-        input: document.getElementById("password"),
-        message: document.getElementById("passwordMessage"),
-        validate: function () {
-          const value = this.input.value.trim();
-          const pattern = /^[A-Za-z0-9]{6,}$/;
-          if (value === "") {
-            return { valid: false, text: "Password is required." };
-          }
-          if (!pattern.test(value)) {
-            return { valid: false, text: "Password must be at least 6 alphanumeric characters." };
-          }
-          return { valid: true, text: "Valid password." };
-        }
-      }
-    };
-
-    function displayResult(fieldObject, result) {
-      fieldObject.message.textContent = result.text;
-      fieldObject.message.className = "message " + (result.valid ? "success" : "error");
-      fieldObject.input.classList.remove("valid", "invalid");
-      fieldObject.input.classList.add(result.valid ? "valid" : "invalid");
-    }
-
-    function validateField(fieldKey) {
-      const result = fields[fieldKey].validate();
-      displayResult(fields[fieldKey], result);
-      return result.valid;
-    }
-
-    function validateAllFields() {
-      let isFormValid = true;
-      for (const key in fields) {
-        const currentValid = validateField(key);
-        if (!currentValid) {
-          isFormValid = false;
-        }
-      }
-      return isFormValid;
-    }
-
-    for (const key in fields) {
-      fields[key].input.addEventListener("blur", function () {
-        validateField(key);
-      });
-
-      fields[key].input.addEventListener("input", function () {
-        if (
-          fields[key].input.classList.contains("invalid") ||
-          fields[key].input.classList.contains("valid")
-        ) {
-          validateField(key);
-        }
-      });
-    }
-
-    form.addEventListener("submit", function (event) {
-      const valid = validateAllFields();
-
-      if (!valid) {
-        event.preventDefault();
-        formStatus.textContent = "Registration failed. Please correct the highlighted fields and try again.";
-        formStatus.className = "status-box error";
-      } else {
-        event.preventDefault();
-        formStatus.textContent = "Seller registration form submitted successfully. All validation rules are satisfied.";
-        formStatus.className = "status-box success";
-      }
-    });
-
-    form.addEventListener("reset", function () {
-      setTimeout(function () {
-        for (const key in fields) {
-          fields[key].message.textContent = "";
-          fields[key].message.className = "message";
-          fields[key].input.classList.remove("valid", "invalid");
-        }
-        formStatus.textContent = "";
-        formStatus.className = "status-box";
-      }, 0);
-    });
-  </script>
 </body>
 </html>
