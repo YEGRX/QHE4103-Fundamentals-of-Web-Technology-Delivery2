@@ -990,19 +990,33 @@ body.home-locked .home-progress {
     gap: 12px;
 }
 
+.brand-lockup__copy {
+    display: grid;
+    gap: 4px;
+}
+
 .brand-mark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
-    border-radius: 0;
-    clip-path: polygon(50% 0%, 100% 22%, 82% 100%, 18% 100%, 0% 22%);
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    width: 56px;
+    height: 56px;
+    padding: 8px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
     background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03)),
-        linear-gradient(135deg, rgba(246, 197, 21, 0.45), rgba(215, 31, 41, 0.18));
-    box-shadow: inset 0 1px 18px rgba(255, 255, 255, 0.08);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+        linear-gradient(135deg, rgba(246, 197, 21, 0.1), rgba(215, 31, 41, 0.12));
+    box-shadow:
+        inset 0 1px 18px rgba(255, 255, 255, 0.05),
+        0 16px 34px rgba(0, 0, 0, 0.3);
+}
+
+.brand-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .brand-mark__letter {
@@ -1172,8 +1186,10 @@ body.home-locked .home-progress {
 }
 
 .page-banner {
+    position: relative;
     width: var(--content-width);
     margin: 0 auto;
+    min-height: 320px;
     padding: 128px 32px 28px;
     overflow: hidden;
 }
@@ -1193,12 +1209,54 @@ body.home-locked .home-progress {
 .page-banner__content {
     position: relative;
     z-index: 1;
-    max-width: 58rem;
+    max-width: min(58rem, calc(100% - 420px));
 }
 
 .page-banner__title {
     margin: 16px 0 12px;
     font-size: clamp(2.3rem, 5vw, 4.4rem);
+}
+
+.page-banner__visual {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    bottom: 22px;
+    width: min(34vw, 420px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background-color: rgba(255, 255, 255, 0.03);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+}
+
+.page-banner__visual::after,
+.support-visual::after,
+.detail-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.42)),
+        linear-gradient(135deg, rgba(246, 197, 21, 0.08), transparent 35%, rgba(215, 31, 41, 0.2));
+}
+
+.page-banner__visual--seller {
+    background-image: url("generated/seller-banner.png");
+}
+
+.page-banner__visual--registration {
+    background-image: url("generated/registration-banner.png");
+}
+
+.page-banner__visual--login {
+    background-image: url("generated/login-banner.png");
+}
+
+.page-banner__visual--add-car {
+    background-image: url("generated/add-car-banner.png");
 }
 
 .page-banner--search,
@@ -1287,7 +1345,7 @@ body[data-page="home"].snap-enabled {
 }
 
 .brand-intro__logo {
-    width: 148px;
+    width: min(540px, calc(100vw - 96px));
     margin: 0 auto 24px;
     filter: blur(18px);
     opacity: 0.4;
@@ -1295,6 +1353,7 @@ body[data-page="home"].snap-enabled {
     animation: logoResolve 1600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
+.brand-intro__logo img,
 .brand-intro__logo svg {
     display: block;
     width: 100%;
@@ -1432,6 +1491,7 @@ body[data-page="home"].snap-enabled {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 62% center;
 }
 
 .hero-cinematic__video[hidden] {
@@ -1485,6 +1545,40 @@ body[data-page="home"].snap-enabled {
     z-index: 1;
     max-width: 760px;
     padding: 80px 42px 42px;
+}
+
+.support-visual,
+.detail-visual {
+    position: relative;
+    min-height: 240px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.03);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.support-visual {
+    margin-top: 28px;
+}
+
+.detail-visual {
+    min-height: 220px;
+    margin-bottom: 22px;
+}
+
+.support-visual--registration {
+    background-image: url("generated/registration-banner.png");
+}
+
+.detail-visual--login {
+    background-image: url("generated/login-banner.png");
+}
+
+.detail-visual--add-car {
+    background-image: url("generated/add-car-banner.png");
 }
 
 @keyframes mediaPulse {
@@ -1583,6 +1677,60 @@ body[data-page="home"].snap-enabled {
 .finale-panel {
     padding: 34px;
     margin-bottom: 28px;
+}
+
+@media (max-width: 1120px) {
+    .page-banner {
+        padding-bottom: 24px;
+    }
+
+    .page-banner__content {
+        max-width: min(52rem, calc(100% - 360px));
+    }
+
+    .page-banner__visual {
+        width: min(34vw, 340px);
+    }
+}
+
+@media (max-width: 980px) {
+    .page-banner {
+        padding: 120px 24px 24px;
+        display: grid;
+        gap: 22px;
+    }
+
+    .page-banner__content {
+        max-width: 100%;
+    }
+
+    .page-banner__visual {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        min-height: 220px;
+    }
+}
+
+@media (max-width: 640px) {
+    .brand-mark {
+        width: 48px;
+        height: 48px;
+        padding: 7px;
+        border-radius: 15px;
+    }
+
+    .brand-intro__logo {
+        width: min(420px, calc(100vw - 56px));
+        margin-bottom: 18px;
+    }
+
+    .page-banner__visual,
+    .support-visual,
+    .detail-visual {
+        min-height: 188px;
+        border-radius: 20px;
+    }
 }
 
 .site-cursor,
