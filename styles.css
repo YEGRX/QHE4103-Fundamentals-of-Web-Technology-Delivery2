@@ -955,7 +955,8 @@ body.home-locked {
 }
 
 body.cursor-enhanced.cursor-over-form .site-cursor,
-body.cursor-enhanced.cursor-over-form .site-cursor-ring {
+body.cursor-enhanced.cursor-over-form .site-cursor-ring,
+body.cursor-enhanced.cursor-over-form .site-cursor-label {
     opacity: 0 !important;
 }
 
@@ -992,24 +993,19 @@ body.home-locked .home-progress {
 
 .brand-lockup__copy {
     display: grid;
-    gap: 4px;
+    gap: 0;
 }
 
 .brand-mark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    padding: 8px;
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
-        linear-gradient(135deg, rgba(246, 197, 21, 0.1), rgba(215, 31, 41, 0.12));
-    box-shadow:
-        inset 0 1px 18px rgba(255, 255, 255, 0.05),
-        0 16px 34px rgba(0, 0, 0, 0.3);
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
 }
 
 .brand-mark img {
@@ -1017,6 +1013,7 @@ body.home-locked .home-progress {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.38));
 }
 
 .brand-mark__letter {
@@ -1038,6 +1035,16 @@ body.home-locked .home-progress {
 .brand-caption {
     letter-spacing: 0.24em;
     color: rgba(255, 255, 255, 0.56);
+}
+
+.site-header .brand-lockup {
+    gap: 10px;
+}
+
+.site-header .brand-title {
+    font-size: 1.18rem;
+    letter-spacing: 0.28em;
+    line-height: 1;
 }
 
 .top-nav a {
@@ -1319,6 +1326,7 @@ body[data-page="home"].snap-enabled {
     display: grid;
     place-items: center;
     background: #000;
+    cursor: pointer;
     transition: opacity 620ms ease, visibility 620ms ease;
 }
 
@@ -1332,25 +1340,25 @@ body[data-page="home"].snap-enabled {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 28%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 60%);
-    opacity: 0.7;
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.055), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 55%);
+    opacity: 0.9;
 }
 
 .brand-intro__content {
     position: relative;
     z-index: 1;
-    width: min(720px, calc(100vw - 40px));
+    width: min(640px, calc(100vw - 40px));
     text-align: center;
 }
 
 .brand-intro__logo {
-    width: min(540px, calc(100vw - 96px));
-    margin: 0 auto 24px;
-    filter: blur(18px);
-    opacity: 0.4;
-    transform: scale(0.92);
-    animation: logoResolve 1600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    width: min(372px, calc(100vw - 112px));
+    margin: 0 auto;
+    filter: blur(16px);
+    opacity: 0.32;
+    transform: scale(0.9);
+    animation: logoResolve 1700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .brand-intro__logo img,
@@ -1358,6 +1366,9 @@ body[data-page="home"].snap-enabled {
     display: block;
     width: 100%;
     height: auto;
+    filter:
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.08))
+        drop-shadow(0 0 44px rgba(255, 255, 255, 0.06));
 }
 
 .brand-intro__brand {
@@ -1407,9 +1418,17 @@ body[data-page="home"].snap-enabled {
     text-transform: uppercase;
 }
 
+.brand-intro__brand,
+.brand-intro__title,
+.brand-intro__copy,
+.brand-intro__enter,
+.brand-intro__hint {
+    display: none;
+}
+
 @keyframes logoResolve {
     0% {
-        filter: blur(22px);
+        filter: blur(20px);
         opacity: 0.2;
         transform: scale(0.88);
     }
@@ -1714,15 +1733,12 @@ body[data-page="home"].snap-enabled {
 
 @media (max-width: 640px) {
     .brand-mark {
-        width: 48px;
-        height: 48px;
-        padding: 7px;
-        border-radius: 15px;
+        width: 34px;
+        height: 34px;
     }
 
     .brand-intro__logo {
-        width: min(420px, calc(100vw - 56px));
-        margin-bottom: 18px;
+        width: min(278px, calc(100vw - 82px));
     }
 
     .page-banner__visual,
@@ -1734,7 +1750,8 @@ body[data-page="home"].snap-enabled {
 }
 
 .site-cursor,
-.site-cursor-ring {
+.site-cursor-ring,
+.site-cursor-label {
     position: fixed;
     top: 0;
     left: 0;
@@ -1746,20 +1763,24 @@ body[data-page="home"].snap-enabled {
 }
 
 .site-cursor {
-    width: 12px;
-    height: 12px;
+    width: 7px;
+    height: 7px;
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.74);
-    box-shadow: 0 0 18px rgba(255, 255, 255, 0.16);
+    background: var(--pearl-strong);
+    border: 1px solid rgba(0, 0, 0, 0.68);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.22);
+    transition: opacity 160ms ease, width 220ms ease, height 220ms ease, background-color 220ms ease, border-color 220ms ease;
 }
 
 .site-cursor-ring {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.26);
-    background: rgba(0, 0, 0, 0.14);
+    border: 1px solid rgba(247, 243, 238, 0.34);
+    background: rgba(247, 243, 238, 0.04);
+    box-shadow: inset 0 0 28px rgba(255, 255, 255, 0.04), 0 0 32px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(5px);
+    transition: opacity 180ms ease, width 260ms ease, height 260ms ease, border-color 260ms ease, background-color 260ms ease;
 }
 
 .site-cursor.is-visible,
@@ -1767,11 +1788,37 @@ body[data-page="home"].snap-enabled {
     opacity: 1;
 }
 
+.site-cursor.is-hover {
+    width: 4px;
+    height: 4px;
+    background: var(--accent-yellow);
+    border-color: rgba(246, 197, 21, 0.72);
+}
+
 .site-cursor-ring.is-hover {
-    width: 68px;
-    height: 68px;
-    border-color: rgba(246, 197, 21, 0.56);
-    background: rgba(215, 31, 41, 0.08);
+    width: 92px;
+    height: 92px;
+    border-color: rgba(246, 197, 21, 0.62);
+    background: rgba(246, 197, 21, 0.08);
+    box-shadow: inset 0 0 42px rgba(246, 197, 21, 0.08), 0 18px 55px rgba(0, 0, 0, 0.38);
+}
+
+.site-cursor-label {
+    padding: 7px 10px;
+    border-radius: 999px;
+    color: var(--obsidian);
+    background: var(--pearl-strong);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translate3d(-100px, -100px, 0);
+    transition: opacity 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.site-cursor-label.is-visible {
+    opacity: 1;
 }
 
 @media (max-width: 1120px) {
