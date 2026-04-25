@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurelia Motors | Add Car</title>
+    <title>SURPASS | Add Car</title>
     <link rel="stylesheet" href="assets/styles.css">
     <script defer src="assets/app.js"></script>
 </head>
@@ -11,12 +11,13 @@
     <div class="site-shell">
         <div data-site-header></div>
         <main class="site-main">
-            <section class="page-banner page-banner--form">
+            <section class="page-banner page-banner--form page-banner--add-car">
                 <div class="page-banner__content">
                     <div class="eyebrow">Listing desk</div>
                     <h1 class="page-banner__title">Add a new vehicle through a more theatrical inventory studio.</h1>
-                    <p class="body-copy">The form still writes into localStorage and feeds the search page immediately, but the surrounding presentation now feels more deliberate.</p>
+                    <p class="body-copy">Create a polished inventory listing with imagery, specifications and immediate placement in the search gallery.</p>
                 </div>
+                <div class="page-banner__visual page-banner__visual--add-car" aria-hidden="true"></div>
             </section>
             <section class="section" style="padding-top:56px;">
                 <div id="add-car-status" class="status-banner fade-up"></div>
@@ -28,7 +29,7 @@
                     <div class="form-shell fade-up">
                         <div class="eyebrow">Inventory desk</div>
                         <h2 class="section-title" style="margin-top:16px;">Publish a new vehicle</h2>
-                        <p class="body-copy">The listing form writes directly into the shared local inventory used by the search and detail pages.</p>
+                        <p class="body-copy">The listing form publishes directly into the shared inventory used by the search and detail pages.</p>
                         <form id="add-car-form" novalidate style="margin-top:24px;">
                             <div class="form-grid">
                                 <div class="field">
@@ -100,11 +101,12 @@
                         </form>
                         <div id="add-car-message" class="message-strip info" style="margin-top:20px;">
                             <strong>Ready to publish</strong>
-                            <span>Complete the required fields and the new vehicle will be added to the local collection immediately.</span>
+                            <span>Complete the required fields and the new vehicle will be added to the collection immediately.</span>
                         </div>
                     </div>
 
                     <div class="detail-card fade-up delay-1">
+                        <div class="detail-visual detail-visual--add-car" aria-hidden="true"></div>
                         <div class="eyebrow">Live preview</div>
                         <h2 class="section-title" style="margin-top:16px;">Your listing artwork updates here</h2>
                         <p class="body-copy">The preview uses either your uploaded image or a generated placeholder based on the brand, model and colour fields.</p>
@@ -116,8 +118,8 @@
                                     <strong>Login → Add Car → Search</strong>
                                 </div>
                                 <div class="detail-spec">
-                                    <span>Persistence</span>
-                                    <strong>localStorage inventory</strong>
+                                    <span>Destination</span>
+                                    <strong>Inventory gallery</strong>
                                 </div>
                             </div>
                         </div>
