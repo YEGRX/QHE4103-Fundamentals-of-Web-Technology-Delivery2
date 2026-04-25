@@ -19,7 +19,7 @@ const DEMO_USER = {
     address: "88 Bund Financial Plaza",
     phone: "13800138000",
     email: "demo@surpass.com",
-    username: "aurelia01",
+    username: "surpass01",
     password: "drive2026"
 };
 
@@ -41,7 +41,7 @@ const HOME_EXPERIENCE = {
         {
             eyebrow: "Launch language",
             title: "Sharper typography, heavier contrast, cleaner black space.",
-            copy: "The homepage now behaves like a brand-led automotive landing experience while still routing straight into the coursework pages."
+            copy: "The homepage now behaves like a brand-led automotive landing experience while still routing straight into the inventory and seller destinations."
         },
         {
             eyebrow: "Motion discipline",
@@ -58,82 +58,39 @@ const HOME_EXPERIENCE = {
 
 const CAR_SEED = [
     {
-        id: "car-taycan-4s",
+        id: "car-porsche-911-carrera-s",
         brand: "Porsche",
-        model: "Taycan 4S",
+        model: "911 Carrera S",
         year: 2024,
-        color: "Arctic Silver",
+        color: "Gentian Blue Metallic",
         location: "Shanghai",
-        price: 1298000,
+        price: 1640000,
+        bodyStyle: "Sports Coupe",
+        mileage: 2100,
+        fuel: "Petrol",
+        transmission: "8-speed PDK",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=82",
+        description: "Compact, precise and deeply polished, this 911 brings everyday usability to a cabin and chassis that still feel built around the driver.",
+        featured: true
+    },
+    {
+        id: "car-porsche-taycan-turbo",
+        brand: "Porsche",
+        model: "Taycan Turbo",
+        year: 2024,
+        color: "Frozen Berry",
+        location: "Hangzhou",
+        price: 1388000,
         bodyStyle: "Electric Sport Sedan",
-        mileage: 6400,
+        mileage: 4200,
         fuel: "Electric",
         transmission: "Two-speed Automatic",
-        description: "A composed four-door grand tourer with instant torque, precise steering and the kind of understated theatre that defines modern performance luxury.",
+        image: "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=1400&q=82",
+        description: "A near-silent grand tourer with instant torque, clean cabin architecture and the balanced body control expected from a Porsche EV.",
         featured: true
     },
     {
-        id: "car-s580",
-        brand: "Mercedes-Benz",
-        model: "S 580 4MATIC",
-        year: 2023,
-        color: "Obsidian Black",
-        location: "Beijing",
-        price: 1560000,
-        bodyStyle: "Executive Sedan",
-        mileage: 9800,
-        fuel: "Petrol",
-        transmission: "9G-TRONIC",
-        description: "A flagship lounge on wheels with remarkable cabin refinement, subtle technology and the effortless authority expected from a top-tier luxury sedan.",
-        featured: true
-    },
-    {
-        id: "car-rs-etron-gt",
-        brand: "Audi",
-        model: "RS e-tron GT",
-        year: 2024,
-        color: "Daytona Grey",
-        location: "Shenzhen",
-        price: 1180000,
-        bodyStyle: "Electric Gran Turismo",
-        mileage: 5300,
-        fuel: "Electric",
-        transmission: "Automatic",
-        description: "Sculpted, quiet and unapologetically fast, this GT blends electric performance with a cabin designed like a private concept lounge.",
-        featured: true
-    },
-    {
-        id: "car-m850i",
-        brand: "BMW",
-        model: "M850i Gran Coupe",
-        year: 2022,
-        color: "Dravit Grey",
-        location: "Hangzhou",
-        price: 968000,
-        bodyStyle: "Gran Coupe",
-        mileage: 14200,
-        fuel: "Petrol",
-        transmission: "8-speed Sport Automatic",
-        description: "Long, low and richly finished, the M850i brings V8 charisma to a silhouette that feels more tailored suit than brute force.",
-        featured: false
-    },
-    {
-        id: "car-range-rover",
-        brand: "Land Rover",
-        model: "Range Rover Autobiography",
-        year: 2024,
-        color: "Sunset Gold",
-        location: "Chengdu",
-        price: 1880000,
-        bodyStyle: "Luxury SUV",
-        mileage: 4600,
-        fuel: "Hybrid",
-        transmission: "Automatic",
-        description: "A serene luxury SUV with a calm, architectural cabin, impeccable ride comfort and a discreet sense of arrival.",
-        featured: true
-    },
-    {
-        id: "car-panamera",
+        id: "car-porsche-panamera-e-hybrid",
         brand: "Porsche",
         model: "Panamera 4 E-Hybrid",
         year: 2023,
@@ -143,101 +100,630 @@ const CAR_SEED = [
         bodyStyle: "Executive Fastback",
         mileage: 7700,
         fuel: "Hybrid",
-        transmission: "PDK Automatic",
-        description: "An elegant long-distance machine with dual-personality dynamics, balancing executive comfort with unmistakable Porsche focus.",
+        transmission: "8-speed PDK",
+        image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1400&q=82",
+        description: "An executive fastback with long-distance comfort, electric running in town and enough chassis focus to keep the drive engaging.",
         featured: false
     },
     {
-        id: "car-a8l",
-        brand: "Audi",
-        model: "A8 L 55 TFSI",
+        id: "car-ferrari-roma",
+        brand: "Ferrari",
+        model: "Roma",
         year: 2022,
-        color: "Glacier White",
-        location: "Nanjing",
-        price: 798000,
-        bodyStyle: "Luxury Sedan",
-        mileage: 18600,
+        color: "Rosso Corsa",
+        location: "Shenzhen",
+        price: 2580000,
+        bodyStyle: "Grand Touring Coupe",
+        mileage: 5200,
         fuel: "Petrol",
-        transmission: "8-speed Tiptronic",
-        description: "A discreet flagship sedan with exceptional rear-seat comfort, restrained lines and the quiet confidence of a proper chauffeur car.",
+        transmission: "8-speed Dual-clutch",
+        image: "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1400&q=82",
+        description: "A front-mid-engine coupe with elegant proportions, fast steering and a cabin that blends daily refinement with theatrical performance.",
+        featured: true
+    },
+    {
+        id: "car-ferrari-f8-tributo",
+        brand: "Ferrari",
+        model: "F8 Tributo",
+        year: 2021,
+        color: "Argento Nurburgring",
+        location: "Beijing",
+        price: 3380000,
+        bodyStyle: "Mid-engine Supercar",
+        mileage: 6400,
+        fuel: "Petrol",
+        transmission: "7-speed Dual-clutch",
+        image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1400&q=82",
+        description: "Light, sharp and intensely responsive, the F8 delivers modern supercar speed with a surprisingly approachable driving position.",
+        featured: true
+    },
+    {
+        id: "car-lamborghini-huracan-evo",
+        brand: "Lamborghini",
+        model: "Huracan EVO",
+        year: 2022,
+        color: "Verde Mantis",
+        location: "Xiamen",
+        price: 2980000,
+        bodyStyle: "V10 Supercar",
+        mileage: 8100,
+        fuel: "Petrol",
+        transmission: "7-speed LDF",
+        image: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1400&q=82",
+        description: "A naturally aspirated V10, low seating position and dramatic geometry make this Huracan feel like an event before the engine even starts.",
+        featured: true
+    },
+    {
+        id: "car-lamborghini-urus",
+        brand: "Lamborghini",
+        model: "Urus Performante",
+        year: 2024,
+        color: "Nero Noctis",
+        location: "Chengdu",
+        price: 3180000,
+        bodyStyle: "Performance SUV",
+        mileage: 3900,
+        fuel: "Petrol",
+        transmission: "8-speed Automatic",
+        image: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=1400&q=82",
+        description: "A high-riding performance machine with huge road presence, fast responses and a cabin that feels more cockpit than family SUV.",
         featured: false
     },
     {
-        id: "car-ix-m60",
+        id: "car-mclaren-720s",
+        brand: "McLaren",
+        model: "720S Performance",
+        year: 2020,
+        color: "Papaya Spark",
+        location: "Hong Kong",
+        price: 3280000,
+        bodyStyle: "Carbon Supercar",
+        mileage: 9800,
+        fuel: "Petrol",
+        transmission: "7-speed SSG",
+        image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=1400&q=82",
+        description: "Carbon structure, hydraulic steering feel and explosive mid-range pace make the 720S one of the most focused cars in the collection.",
+        featured: true
+    },
+    {
+        id: "car-mclaren-gt",
+        brand: "McLaren",
+        model: "GT",
+        year: 2022,
+        color: "Pacific Blue",
+        location: "Suzhou",
+        price: 1980000,
+        bodyStyle: "Grand Tourer",
+        mileage: 7400,
+        fuel: "Petrol",
+        transmission: "7-speed SSG",
+        image: "https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&w=1400&q=82",
+        description: "A lighter take on the grand tourer idea, with supercar bones, useful luggage space and a more relaxed ride than its track-led siblings.",
+        featured: false
+    },
+    {
+        id: "car-mercedes-s580",
+        brand: "Mercedes-Benz",
+        model: "S 580 4MATIC",
+        year: 2023,
+        color: "Obsidian Black",
+        location: "Beijing",
+        price: 1498000,
+        bodyStyle: "Executive Sedan",
+        mileage: 9800,
+        fuel: "Petrol",
+        transmission: "9G-TRONIC",
+        image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1400&q=82",
+        description: "A flagship lounge on wheels with exceptional rear comfort, hushed ride quality and the authority of a proper chauffeur sedan.",
+        featured: true
+    },
+    {
+        id: "car-mercedes-amg-gt",
+        brand: "Mercedes-AMG",
+        model: "GT 63 S 4MATIC+",
+        year: 2022,
+        color: "Designo Graphite Grey",
+        location: "Nanjing",
+        price: 1880000,
+        bodyStyle: "Performance Coupe",
+        mileage: 12600,
+        fuel: "Petrol",
+        transmission: "AMG SPEEDSHIFT MCT",
+        image: "https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&w=1400&q=82",
+        description: "AMG drama in a long, planted body, pairing four-door practicality with the soundtrack and torque of a proper performance flagship.",
+        featured: false
+    },
+    {
+        id: "car-mercedes-g63",
+        brand: "Mercedes-AMG",
+        model: "G 63",
+        year: 2021,
+        color: "Polar White",
+        location: "Wuhan",
+        price: 2380000,
+        bodyStyle: "Performance SUV",
+        mileage: 21400,
+        fuel: "Petrol",
+        transmission: "AMG SPEEDSHIFT",
+        image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=1400&q=82",
+        description: "Boxy presence, unmistakable sound and commanding road posture make the G 63 an icon that still feels irresistible.",
+        featured: false
+    },
+    {
+        id: "car-bmw-m8-competition",
+        brand: "BMW",
+        model: "M8 Competition Gran Coupe",
+        year: 2022,
+        color: "Dravit Grey",
+        location: "Hangzhou",
+        price: 1220000,
+        bodyStyle: "Gran Coupe",
+        mileage: 14200,
+        fuel: "Petrol",
+        transmission: "8-speed M Steptronic",
+        image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1400&q=82",
+        description: "A long, low V8 grand coupe with rich cabin materials, confident high-speed manners and enough aggression for weekend drives.",
+        featured: false
+    },
+    {
+        id: "car-bmw-ix-m60",
         brand: "BMW",
         model: "iX M60",
         year: 2024,
         color: "Storm Bay",
         location: "Suzhou",
-        price: 1020000,
+        price: 888000,
         bodyStyle: "Electric SUV",
         mileage: 3200,
         fuel: "Electric",
         transmission: "Automatic",
-        description: "A bold electric SUV with powerful acceleration, lounge-grade interior materials and enough digital polish to feel future-ready.",
+        image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1400&q=82",
+        description: "A bold electric SUV with lounge-grade materials, immediate acceleration and a digital cabin tuned for quiet long-distance travel.",
         featured: false
     },
     {
-        id: "car-g63",
-        brand: "Mercedes-Benz",
-        model: "G 63 AMG",
-        year: 2021,
-        color: "Polar White",
-        location: "Wuhan",
-        price: 2190000,
-        bodyStyle: "Performance SUV",
-        mileage: 21400,
-        fuel: "Petrol",
-        transmission: "AMG SPEEDSHIFT",
-        description: "Boxy presence, unmistakable sound and commanding road posture make the G 63 an icon that still feels irresistible.",
-        featured: false
+        id: "car-audi-rs-etron-gt",
+        brand: "Audi",
+        model: "RS e-tron GT",
+        year: 2024,
+        color: "Daytona Grey",
+        location: "Shenzhen",
+        price: 1128000,
+        bodyStyle: "Electric Gran Turismo",
+        mileage: 5300,
+        fuel: "Electric",
+        transmission: "Automatic",
+        image: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1400&q=82",
+        description: "Sculpted, quiet and unapologetically fast, this GT blends electric performance with a cabin designed like a private concept lounge.",
+        featured: true
     },
     {
-        id: "car-r8-v10",
+        id: "car-audi-r8-v10",
         brand: "Audi",
         model: "R8 V10 Performance",
         year: 2022,
         color: "Kemora Grey",
-        location: "Xiamen",
+        location: "Qingdao",
         price: 1860000,
         bodyStyle: "Mid-engine Coupe",
         mileage: 8800,
         fuel: "Petrol",
-        transmission: "S tronic",
-        description: "A supercar for drivers who want clean surfaces, naturally aspirated drama and everyday usability wrapped in one machine.",
+        transmission: "7-speed S tronic",
+        image: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1400&q=82",
+        description: "A clean, usable mid-engine coupe with naturally aspirated character, precise controls and a cabin that stays beautifully restrained.",
         featured: false
     },
     {
-        id: "car-carrera",
-        brand: "Porsche",
-        model: "911 Carrera S",
+        id: "car-range-rover-autobiography",
+        brand: "Range Rover",
+        model: "Autobiography LWB",
         year: 2024,
-        color: "Gentian Blue",
-        location: "Qingdao",
-        price: 1640000,
-        bodyStyle: "Sports Coupe",
-        mileage: 2100,
-        fuel: "Petrol",
-        transmission: "PDK Automatic",
-        description: "Sharp, compact and deeply polished, the Carrera S captures the timeless appeal of a precision-built sports car.",
+        color: "Sunset Gold",
+        location: "Chengdu",
+        price: 1988000,
+        bodyStyle: "Luxury SUV",
+        mileage: 4600,
+        fuel: "Hybrid",
+        transmission: "8-speed Automatic",
+        image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1400&q=82",
+        description: "A serene luxury SUV with a calm architectural cabin, excellent second-row comfort and effortless road presence.",
         featured: true
     },
     {
-        id: "car-eqs",
-        brand: "Mercedes-Benz",
-        model: "EQS 580 4MATIC",
+        id: "car-rolls-royce-ghost",
+        brand: "Rolls-Royce",
+        model: "Ghost Black Badge",
         year: 2023,
-        color: "Emerald Green",
+        color: "Black Diamond",
+        location: "Shanghai",
+        price: 4680000,
+        bodyStyle: "Ultra-luxury Sedan",
+        mileage: 5100,
+        fuel: "Petrol",
+        transmission: "Satellite-aided Automatic",
+        image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1400&q=82",
+        description: "Quiet authority, deep-pile comfort and a darker specification give this Ghost a more contemporary private-client character.",
+        featured: true
+    },
+    {
+        id: "car-rolls-royce-cullinan",
+        brand: "Rolls-Royce",
+        model: "Cullinan",
+        year: 2022,
+        color: "Arctic White",
+        location: "Beijing",
+        price: 5280000,
+        bodyStyle: "Ultra-luxury SUV",
+        mileage: 11200,
+        fuel: "Petrol",
+        transmission: "8-speed Automatic",
+        image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1400&q=82",
+        description: "A high-riding private suite with remarkable isolation, expansive rear seating and the softest sense of arrival in the inventory.",
+        featured: false
+    },
+    {
+        id: "car-bentley-continental-gt",
+        brand: "Bentley",
+        model: "Continental GT Speed",
+        year: 2023,
+        color: "Sequin Blue",
+        location: "Guangzhou",
+        price: 3080000,
+        bodyStyle: "Luxury GT Coupe",
+        mileage: 6900,
+        fuel: "Petrol",
+        transmission: "8-speed Dual-clutch",
+        image: "https://images.unsplash.com/photo-1523983388277-336a66bf9bcd?auto=format&fit=crop&w=1400&q=82",
+        description: "A hand-finished grand tourer with huge torque, polished ride comfort and the kind of cabin detail that rewards close inspection.",
+        featured: false
+    },
+    {
+        id: "car-bentley-bentayga",
+        brand: "Bentley",
+        model: "Bentayga V8",
+        year: 2022,
+        color: "British Racing Green",
         location: "Hong Kong",
-        price: 1420000,
-        bodyStyle: "Electric Luxury Sedan",
-        mileage: 6100,
-        fuel: "Electric",
-        transmission: "Automatic",
-        description: "Ultra-smooth electric propulsion, vast rear comfort and a flowing body make the EQS feel like modern luxury in motion.",
+        price: 2680000,
+        bodyStyle: "Luxury SUV",
+        mileage: 15200,
+        fuel: "Petrol",
+        transmission: "8-speed Automatic",
+        image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1400&q=82",
+        description: "A refined luxury SUV with strong V8 performance, soft leather detailing and the composure expected from a long-distance Bentley.",
+        featured: false
+    },
+    {
+        id: "car-aston-martin-db12",
+        brand: "Aston Martin",
+        model: "DB12",
+        year: 2024,
+        color: "Magnetic Silver",
+        location: "Xiamen",
+        price: 2480000,
+        bodyStyle: "Super GT",
+        mileage: 1800,
+        fuel: "Petrol",
+        transmission: "8-speed Automatic",
+        image: "https://images.unsplash.com/photo-1619405399517-d7fce0f13302?auto=format&fit=crop&w=1400&q=82",
+        description: "A sharp new-generation GT with elegant proportions, muscular V8 response and a cabin that finally feels fully modern.",
+        featured: true
+    },
+    {
+        id: "car-aston-martin-vantage",
+        brand: "Aston Martin",
+        model: "Vantage F1 Edition",
+        year: 2022,
+        color: "Racing Green",
+        location: "Nanjing",
+        price: 1860000,
+        bodyStyle: "Sports Coupe",
+        mileage: 9600,
+        fuel: "Petrol",
+        transmission: "8-speed Automatic",
+        image: "https://images.unsplash.com/photo-1567818735868-e71b99932e29?auto=format&fit=crop&w=1400&q=82",
+        description: "Compact, muscular and more focused than the standard car, this Vantage brings track-influenced tuning into a beautifully usable coupe.",
+        featured: false
+    },
+    {
+        id: "car-maserati-mc20",
+        brand: "Maserati",
+        model: "MC20",
+        year: 2023,
+        color: "Bianco Audace",
+        location: "Macau",
+        price: 2280000,
+        bodyStyle: "Mid-engine Supercar",
+        mileage: 3600,
+        fuel: "Petrol",
+        transmission: "8-speed Dual-clutch",
+        image: "https://images.unsplash.com/photo-1549925862-990f51d3c401?auto=format&fit=crop&w=1400&q=82",
+        description: "A carbon-bodied Italian supercar with butterfly doors, clean surfacing and a surprisingly refined cabin for long weekend use.",
         featured: false
     }
 ];
+
+const LEGACY_SEED_IDS = new Set([
+    "car-taycan-4s",
+    "car-rs-etron-gt",
+    "car-range-rover",
+    "car-carrera",
+    "car-s580",
+    "car-ix-m60",
+    "car-panamera",
+    "car-eqs",
+    "car-m850i",
+    "car-a8l",
+    "car-r8-v10",
+    "car-g63"
+]);
+
+const VEHICLE_DETAIL_PRESETS = {
+    "car-porsche-911-carrera-s": {
+        power: "443 hp",
+        torque: "530 Nm",
+        acceleration: "3.5 s 0-100 km/h",
+        topSpeed: "308 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2+2",
+        condition: "Certified pre-owned",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Positioned around current low-mileage Carrera S listings with desirable metallic paint and PDK specification."
+    },
+    "car-porsche-taycan-turbo": {
+        power: "671 hp overboost",
+        torque: "850 Nm",
+        acceleration: "3.2 s 0-100 km/h",
+        topSpeed: "260 km/h",
+        drivetrain: "Dual-motor all-wheel drive",
+        seats: "4",
+        condition: "Manufacturer warranty active",
+        sellerType: "Private collection",
+        marketNote: "Priced against recent high-spec Taycan Turbo examples with low mileage and battery warranty coverage."
+    },
+    "car-porsche-panamera-e-hybrid": {
+        power: "462 hp combined",
+        torque: "700 Nm",
+        acceleration: "4.4 s 0-100 km/h",
+        topSpeed: "280 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "4",
+        condition: "Dealer maintained",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Balanced for an executive hybrid fastback with moderate mileage and desirable grey exterior specification."
+    },
+    "car-ferrari-roma": {
+        power: "612 hp",
+        torque: "760 Nm",
+        acceleration: "3.4 s 0-100 km/h",
+        topSpeed: "320 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2+2",
+        condition: "Collector-grade",
+        sellerType: "Private collection",
+        marketNote: "Aligned with low-mileage Roma coupe demand, Rosso Corsa paint and current grand touring Ferrari market values."
+    },
+    "car-ferrari-f8-tributo": {
+        power: "710 hp",
+        torque: "770 Nm",
+        acceleration: "2.9 s 0-100 km/h",
+        topSpeed: "340 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2",
+        condition: "Collector-grade",
+        sellerType: "Specialist performance dealer",
+        marketNote: "Reflects the premium for a mid-engine V8 Ferrari with restrained mileage and high collector desirability."
+    },
+    "car-lamborghini-huracan-evo": {
+        power: "631 hp",
+        torque: "600 Nm",
+        acceleration: "2.9 s 0-100 km/h",
+        topSpeed: "325 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "2",
+        condition: "Performance inspected",
+        sellerType: "Specialist performance dealer",
+        marketNote: "Set for a V10 supercar with strong color specification and service history appropriate to the mileage."
+    },
+    "car-lamborghini-urus": {
+        power: "657 hp",
+        torque: "850 Nm",
+        acceleration: "3.3 s 0-100 km/h",
+        topSpeed: "306 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "5",
+        condition: "Manufacturer warranty active",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Priced to match current high-performance SUV demand for late-model Urus Performante inventory."
+    },
+    "car-mclaren-720s": {
+        power: "710 hp",
+        torque: "770 Nm",
+        acceleration: "2.9 s 0-100 km/h",
+        topSpeed: "341 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2",
+        condition: "Carbon chassis inspected",
+        sellerType: "Specialist performance dealer",
+        marketNote: "Reflects the premium for a carbon-tub supercar with vivid Papaya specification and documented maintenance."
+    },
+    "car-mclaren-gt": {
+        power: "612 hp",
+        torque: "630 Nm",
+        acceleration: "3.2 s 0-100 km/h",
+        topSpeed: "326 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2",
+        condition: "Touring specification",
+        sellerType: "Private collection",
+        marketNote: "Positioned for a lower-mileage McLaren GT where long-distance usability softens pure supercar pricing."
+    },
+    "car-mercedes-s580": {
+        power: "496 hp",
+        torque: "700 Nm",
+        acceleration: "4.4 s 0-100 km/h",
+        topSpeed: "250 km/h",
+        drivetrain: "4MATIC all-wheel drive",
+        seats: "5",
+        condition: "Executive maintained",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Benchmark price for a recent S-Class flagship with chauffeur-grade comfort and moderate mileage."
+    },
+    "car-mercedes-amg-gt": {
+        power: "630 hp",
+        torque: "900 Nm",
+        acceleration: "3.2 s 0-100 km/h",
+        topSpeed: "315 km/h",
+        drivetrain: "4MATIC+ all-wheel drive",
+        seats: "4",
+        condition: "AMG service record",
+        sellerType: "Specialist performance dealer",
+        marketNote: "Adjusted for GT 63 S performance credentials, mileage, and four-door grand touring usability."
+    },
+    "car-mercedes-g63": {
+        power: "577 hp",
+        torque: "850 Nm",
+        acceleration: "4.5 s 0-100 km/h",
+        topSpeed: "220 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "5",
+        condition: "Icon specification",
+        sellerType: "Private collection",
+        marketNote: "G 63 pricing remains resilient due to limited supply, strong road presence and enduring collector appeal."
+    },
+    "car-bmw-m8-competition": {
+        power: "617 hp",
+        torque: "750 Nm",
+        acceleration: "3.2 s 0-100 km/h",
+        topSpeed: "305 km/h",
+        drivetrain: "M xDrive",
+        seats: "4",
+        condition: "Dealer maintained",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Marketed below two-door exotics while retaining flagship M performance and long-distance comfort."
+    },
+    "car-bmw-ix-m60": {
+        power: "610 hp",
+        torque: "1,100 Nm",
+        acceleration: "3.8 s 0-100 km/h",
+        topSpeed: "250 km/h",
+        drivetrain: "Dual-motor all-wheel drive",
+        seats: "5",
+        condition: "Battery warranty active",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Priced for a late-model electric luxury SUV where specification and warranty status drive buyer confidence."
+    },
+    "car-audi-rs-etron-gt": {
+        power: "637 hp overboost",
+        torque: "830 Nm",
+        acceleration: "3.3 s 0-100 km/h",
+        topSpeed: "250 km/h",
+        drivetrain: "Dual-motor quattro",
+        seats: "4",
+        condition: "Battery warranty active",
+        sellerType: "Private collection",
+        marketNote: "Reflects current electric GT values, favoring clean mileage and desirable Daytona Grey finish."
+    },
+    "car-audi-r8-v10": {
+        power: "602 hp",
+        torque: "560 Nm",
+        acceleration: "3.2 s 0-100 km/h",
+        topSpeed: "330 km/h",
+        drivetrain: "quattro all-wheel drive",
+        seats: "2",
+        condition: "Performance inspected",
+        sellerType: "Specialist performance dealer",
+        marketNote: "R8 pricing benefits from naturally aspirated V10 scarcity and mature usability compared with more extreme supercars."
+    },
+    "car-range-rover-autobiography": {
+        power: "510 hp combined",
+        torque: "700 Nm",
+        acceleration: "5.5 s 0-100 km/h",
+        topSpeed: "242 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "5",
+        condition: "Executive maintained",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Set for a long-wheelbase luxury SUV with high rear-seat comfort and strong executive-market demand."
+    },
+    "car-rolls-royce-ghost": {
+        power: "591 hp",
+        torque: "900 Nm",
+        acceleration: "4.8 s 0-100 km/h",
+        topSpeed: "250 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "5",
+        condition: "Collector-grade",
+        sellerType: "Private collection",
+        marketNote: "Black Badge specification and low mileage support a premium over standard Ghost market positioning."
+    },
+    "car-rolls-royce-cullinan": {
+        power: "563 hp",
+        torque: "850 Nm",
+        acceleration: "5.2 s 0-100 km/h",
+        topSpeed: "250 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "5",
+        condition: "Private-client specification",
+        sellerType: "Private collection",
+        marketNote: "Cullinan values remain elevated for well-kept examples with strong color contrast and rear-seat presence."
+    },
+    "car-bentley-continental-gt": {
+        power: "650 hp",
+        torque: "900 Nm",
+        acceleration: "3.6 s 0-100 km/h",
+        topSpeed: "335 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "4",
+        condition: "Grand touring specification",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Priced for a hand-finished GT coupe where specification, mileage and color depth define desirability."
+    },
+    "car-bentley-bentayga": {
+        power: "542 hp",
+        torque: "770 Nm",
+        acceleration: "4.5 s 0-100 km/h",
+        topSpeed: "290 km/h",
+        drivetrain: "All-wheel drive",
+        seats: "5",
+        condition: "Dealer maintained",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Balanced for a V8 luxury SUV with higher mileage but strong cabin finish and daily usability."
+    },
+    "car-aston-martin-db12": {
+        power: "671 hp",
+        torque: "800 Nm",
+        acceleration: "3.6 s 0-100 km/h",
+        topSpeed: "325 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2+2",
+        condition: "Near-new",
+        sellerType: "Private collection",
+        marketNote: "Near-new DB12 availability is limited, so the price reflects low mileage and latest-generation interior quality."
+    },
+    "car-aston-martin-vantage": {
+        power: "527 hp",
+        torque: "685 Nm",
+        acceleration: "3.6 s 0-100 km/h",
+        topSpeed: "314 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2",
+        condition: "Performance inspected",
+        sellerType: "Specialist performance dealer",
+        marketNote: "F1 Edition specification supports a premium while staying below newer DB12 and flagship supercar pricing."
+    },
+    "car-maserati-mc20": {
+        power: "621 hp",
+        torque: "730 Nm",
+        acceleration: "2.9 s 0-100 km/h",
+        topSpeed: "325 km/h",
+        drivetrain: "Rear-wheel drive",
+        seats: "2",
+        condition: "Carbon chassis inspected",
+        sellerType: "Specialist performance dealer",
+        marketNote: "Positioned for an Italian carbon supercar with low mileage and strong visual theatre, below the highest-volume exotic premiums."
+    }
+};
 
 document.addEventListener("DOMContentLoaded", () => {
     seedStorage();
@@ -305,7 +791,7 @@ function renderShell() {
                     <div class="footer-top">
                         <div>
                             <h2 class="brand-title" style="margin:0;">${BRAND_IDENTITY.name}</h2>
-                            <p class="brand-caption">Italian-inspired cinematic front-end showcase</p>
+                            <p class="brand-caption">Private performance marketplace</p>
                         </div>
                         <div class="footer-links">
                             <a href="index.html" data-cursor-hover>Home</a>
@@ -317,9 +803,9 @@ function renderShell() {
                         </div>
                     </div>
                     <p class="footer-note">
-                        Crafted as a pure front-end automotive experience with a cinematic homepage, local demo data and a consistent business flow across every destination.
+                        Curated performance cars, private seller access and editorial inventory presentation for discerning drivers.
                     </p>
-                    <p class="footer-note">QHE4103 Fundamentals of Web Technology • <span data-current-year></span></p>
+                    <p class="footer-note">© <span data-current-year></span> ${BRAND_IDENTITY.name}. Privacy • Terms • Concierge support.</p>
                 </div>
             </footer>
         `;
@@ -402,6 +888,7 @@ function initHomePage() {
 
     if (featuredGrid) {
         featuredGrid.innerHTML = featuredCars.map(renderShowcaseCard).join("");
+        attachVehicleImageFallbacks(featuredGrid);
     }
 
     if (editorialList) {
@@ -590,7 +1077,7 @@ function initSellerPage() {
             </div>
             <div class="stack-actions">
                 <a class="primary-button" href="registration.html">Register now</a>
-                <a class="secondary-button" href="login.html">Use demo login</a>
+                <a class="secondary-button" href="login.html">Open seller access</a>
             </div>
         </div>
     `;
@@ -649,7 +1136,7 @@ function initRegistrationPage() {
             message,
             "success",
             "Registration completed",
-            "Your seller profile has been stored locally. Use the login page to activate your seller session."
+            "Your seller profile is ready. Use the login page to activate your seller session."
         );
     });
 }
@@ -672,7 +1159,7 @@ function initLoginPage() {
 
         const matchedUser = getUsers().find((user) => user.username === username && user.password === password);
         if (!matchedUser) {
-            showMessage(message, "error", "Unable to sign in", "The credentials do not match our local seller records. Try the demo account or your registered details.");
+            showMessage(message, "error", "Unable to sign in", "The credentials do not match our seller records. Try the concierge account or your registered details.");
             return;
         }
 
@@ -706,7 +1193,7 @@ function initAddCarPage() {
             <div>
                 <div class="eyebrow">Seller sign-in required</div>
                 <h2 class="section-title" style="margin-top:16px;">Unlock the listing desk</h2>
-                <p class="body-copy">This page stores new cars into the local collection, so a seller session is required before we can publish a listing.</p>
+                <p class="body-copy">This page publishes new cars into the collection, so a seller session is required before we can publish a listing.</p>
             </div>
             <div class="stack-actions">
                 <a class="primary-button" href="login.html?redirect=add-car.html">Go to login</a>
@@ -803,6 +1290,7 @@ function initSearchPage() {
     const empty = document.querySelector("#search-empty");
     if (!form || !results || !count || !empty) return;
 
+    populateSearchFilters(form);
     hydrateSearchForm(form);
     performSearch();
 
@@ -820,27 +1308,36 @@ function initSearchPage() {
         }, 0);
     });
 
-    form.elements.sort.addEventListener("change", () => performSearch());
+    ["sort", "brand", "bodyStyle", "fuel"].forEach((name) => {
+        form.elements[name]?.addEventListener("change", () => performSearch());
+    });
 
     function performSearch() {
         const model = form.elements.model.value.trim().toLowerCase();
         const year = form.elements.year.value.trim();
+        const brand = form.elements.brand?.value || "";
+        const bodyStyle = form.elements.bodyStyle?.value || "";
+        const fuel = form.elements.fuel?.value || "";
         const sort = form.elements.sort.value;
         let cars = getCars();
 
         cars = cars.filter((car) => {
             const matchesModel = !model || `${car.brand} ${car.model}`.toLowerCase().includes(model);
             const matchesYear = !year || String(car.year) === year;
-            return matchesModel && matchesYear;
+            const matchesBrand = !brand || car.brand === brand;
+            const matchesBody = !bodyStyle || car.bodyStyle === bodyStyle;
+            const matchesFuel = !fuel || car.fuel === fuel;
+            return matchesModel && matchesYear && matchesBrand && matchesBody && matchesFuel;
         });
 
         cars = sortCars(cars, sort);
-        updateSearchUrl({ model, year, sort });
+        updateSearchUrl({ model, year, brand, bodyStyle, fuel, sort });
 
         count.textContent = cars.length === 1 ? "1 vehicle available" : `${cars.length} vehicles available`;
         empty.style.display = cars.length ? "none" : "block";
 
         results.innerHTML = cars.map(renderVehicleCard).join("");
+        attachVehicleImageFallbacks(results);
     }
 }
 
@@ -869,7 +1366,7 @@ function initDetailPage() {
     shell.innerHTML = `
         <div class="detail-grid fade-up">
             <div class="detail-card">
-                <img class="detail-image" src="${car.image}" alt="${escapeHtml(car.brand)} ${escapeHtml(car.model)}">
+                <img class="detail-image" src="${escapeHtml(car.image)}" data-fallback="${escapeHtml(buildVehicleArt(car))}" alt="${escapeHtml(car.brand)} ${escapeHtml(car.model)}">
             </div>
             <div class="detail-card">
                 <div class="eyebrow">${escapeHtml(car.brand)} curated listing</div>
@@ -879,6 +1376,10 @@ function initDetailPage() {
                 <p class="body-copy">${escapeHtml(car.year)} • ${escapeHtml(car.bodyStyle)} • ${escapeHtml(car.location)}</p>
                 <p class="detail-price">${formatCurrency(car.price)}</p>
                 <p class="detail-copy">${escapeHtml(car.description)}</p>
+                <div class="detail-price-note">
+                    <span>Market positioning</span>
+                    <p>${escapeHtml(car.marketNote)}</p>
+                </div>
                 <div class="detail-specs">
                     ${renderDetailSpec("Colour", car.color)}
                     ${renderDetailSpec("Mileage", formatMileage(car.mileage))}
@@ -887,6 +1388,27 @@ function initDetailPage() {
                     ${renderDetailSpec("Location", car.location)}
                     ${renderDetailSpec("Year", car.year)}
                 </div>
+                <div class="detail-performance-grid">
+                    ${renderDetailSpec("Power", car.power)}
+                    ${renderDetailSpec("Torque", car.torque)}
+                    ${renderDetailSpec("0-100 km/h", car.acceleration)}
+                    ${renderDetailSpec("Top speed", car.topSpeed)}
+                    ${renderDetailSpec("Drivetrain", car.drivetrain)}
+                    ${renderDetailSpec("Seats", car.seats)}
+                    ${renderDetailSpec("Condition", car.condition)}
+                    ${renderDetailSpec("Seller", car.sellerType)}
+                </div>
+                <div class="vehicle-three-view" aria-label="${escapeHtml(car.brand)} ${escapeHtml(car.model)} technical three-view illustration">
+                    <div class="vehicle-three-view__heading">
+                        <span>Technical three-view</span>
+                        <strong>${escapeHtml(car.brand)} ${escapeHtml(car.model)}</strong>
+                    </div>
+                    <div class="vehicle-three-view__grid">
+                        ${renderVehicleView("Front", car)}
+                        ${renderVehicleView("Side", car)}
+                        ${renderVehicleView("Rear", car)}
+                    </div>
+                </div>
                 <div class="detail-cta" style="margin-top:24px;">
                     <a class="primary-button" href="search.html">Back to search</a>
                     <a class="secondary-button" href="add-car.html">List your own car</a>
@@ -894,6 +1416,7 @@ function initDetailPage() {
             </div>
         </div>
     `;
+    attachVehicleImageFallbacks(shell);
 }
 
 function markCursorTargets() {
@@ -901,7 +1424,10 @@ function markCursorTargets() {
         "a",
         "button",
         ".showcase-card",
+        ".showcase-image",
         ".vehicle-card",
+        ".vehicle-image",
+        ".detail-image",
         ".quick-link-card",
         ".journey-card",
         ".summary-card",
@@ -914,6 +1440,9 @@ function markCursorTargets() {
     targets.forEach((target) => {
         if (!target.matches("input, textarea, select, option, label")) {
             target.setAttribute("data-cursor-hover", "true");
+            if ((target.matches(".vehicle-card, .showcase-card, .vehicle-image, .showcase-image, .detail-image")) && !target.dataset.cursorLabel) {
+                target.setAttribute("data-cursor-label", "View");
+            }
         }
     });
 }
@@ -925,27 +1454,35 @@ function initCustomCursor() {
     document.body.classList.add("cursor-enhanced");
     const dot = document.createElement("div");
     const ring = document.createElement("div");
+    const label = document.createElement("div");
     dot.className = "site-cursor";
     ring.className = "site-cursor-ring";
-    document.body.append(dot, ring);
+    label.className = "site-cursor-label";
+    document.body.append(dot, ring, label);
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    let dotX = mouseX;
-    let dotY = mouseY;
     let ringX = mouseX;
     let ringY = mouseY;
+    let labelX = mouseX;
+    let labelY = mouseY;
     let hoveredElement = null;
     let overForm = false;
 
     const activateHover = (element) => {
         hoveredElement = element;
+        dot.classList.add("is-hover");
         ring.classList.add("is-hover");
+        const cursorLabel = element.dataset.cursorLabel || "";
+        label.textContent = cursorLabel;
+        label.classList.toggle("is-visible", Boolean(cursorLabel));
     };
 
     const clearHover = () => {
         hoveredElement = null;
+        dot.classList.remove("is-hover");
         ring.classList.remove("is-hover");
+        label.classList.remove("is-visible");
     };
 
     document.addEventListener("mouseover", (event) => {
@@ -984,11 +1521,15 @@ function initCustomCursor() {
         mouseY = event.clientY;
         dot.classList.add("is-visible");
         ring.classList.add("is-visible");
+        if (!overForm && label.textContent) {
+            label.classList.add("is-visible");
+        }
     });
 
     document.addEventListener("mouseleave", () => {
         dot.classList.remove("is-visible");
         ring.classList.remove("is-visible");
+        label.classList.remove("is-visible");
     });
 
     const tick = () => {
@@ -997,17 +1538,18 @@ function initCustomCursor() {
 
         if (hoveredElement && !overForm) {
             const rect = hoveredElement.getBoundingClientRect();
-            targetX += (rect.left + rect.width / 2 - mouseX) * 0.14;
-            targetY += (rect.top + rect.height / 2 - mouseY) * 0.14;
+            targetX += (rect.left + rect.width / 2 - mouseX) * 0.2;
+            targetY += (rect.top + rect.height / 2 - mouseY) * 0.2;
         }
 
-        dotX += (targetX - dotX) * 0.28;
-        dotY += (targetY - dotY) * 0.28;
-        ringX += (targetX - ringX) * 0.18;
-        ringY += (targetY - ringY) * 0.18;
+        ringX += (targetX - ringX) * 0.12;
+        ringY += (targetY - ringY) * 0.12;
+        labelX += (mouseX + 34 - labelX) * 0.18;
+        labelY += (mouseY - 18 - labelY) * 0.18;
 
-        dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
         ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+        label.style.transform = `translate3d(${labelX}px, ${labelY}px, 0)`;
         window.requestAnimationFrame(tick);
     };
 
@@ -1025,10 +1567,20 @@ function seedStorage() {
 
     const storedCars = readJson(STORAGE_KEYS.cars);
     if (!Array.isArray(storedCars) || storedCars.length === 0) {
-        saveCars(CAR_SEED.map(normalizeCar));
+        saveCars(mergeSeedCars([]));
     } else {
-        saveCars(storedCars.map(normalizeCar));
+        saveCars(mergeSeedCars(storedCars));
     }
+}
+
+function mergeSeedCars(storedCars) {
+    const seedIds = new Set(CAR_SEED.map((car) => car.id));
+    const normalizedSeeds = CAR_SEED.map(normalizeCar);
+    const userCars = storedCars
+        .map(normalizeCar)
+        .filter((car) => !seedIds.has(car.id) && !LEGACY_SEED_IDS.has(car.id));
+
+    return [...normalizedSeeds, ...userCars];
 }
 
 function getUsers() {
@@ -1142,18 +1694,43 @@ function sortCars(cars, sort) {
     return sorted.sort((a, b) => Number(b.featured) - Number(a.featured) || b.year - a.year);
 }
 
+function populateSearchFilters(form) {
+    const cars = getCars();
+    populateSelect(form.elements.brand, uniqueSorted(cars.map((car) => car.brand)), "All brands");
+    populateSelect(form.elements.bodyStyle, uniqueSorted(cars.map((car) => car.bodyStyle)), "All body styles");
+    populateSelect(form.elements.fuel, uniqueSorted(cars.map((car) => car.fuel)), "All fuel types");
+}
+
+function populateSelect(select, values, fallbackLabel) {
+    if (!select) return;
+    select.innerHTML = [
+        `<option value="">${escapeHtml(fallbackLabel)}</option>`,
+        ...values.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`)
+    ].join("");
+}
+
+function uniqueSorted(values) {
+    return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+}
+
 function hydrateSearchForm(form) {
     const params = new URLSearchParams(window.location.search);
     form.elements.model.value = params.get("model") || "";
     form.elements.year.value = params.get("year") || "";
+    if (form.elements.brand) form.elements.brand.value = params.get("brand") || "";
+    if (form.elements.bodyStyle) form.elements.bodyStyle.value = params.get("body") || "";
+    if (form.elements.fuel) form.elements.fuel.value = params.get("fuel") || "";
     form.elements.sort.value = params.get("sort") || "featured";
 }
 
-function updateSearchUrl({ model, year, sort }) {
+function updateSearchUrl({ model, year, brand, bodyStyle, fuel, sort }) {
     const url = new URL(window.location.href);
     const params = new URLSearchParams();
     if (model) params.set("model", model);
     if (year) params.set("year", year);
+    if (brand) params.set("brand", brand);
+    if (bodyStyle) params.set("body", bodyStyle);
+    if (fuel) params.set("fuel", fuel);
     if (sort && sort !== "featured") params.set("sort", sort);
     url.search = params.toString();
     window.history.replaceState({}, "", url.toString());
@@ -1162,7 +1739,7 @@ function updateSearchUrl({ model, year, sort }) {
 function renderShowcaseCard(car) {
     return `
         <article class="showcase-card fade-up" data-cursor-hover="true">
-            <img class="showcase-image" src="${car.image}" alt="${escapeHtml(car.brand)} ${escapeHtml(car.model)}">
+            <img class="showcase-image" src="${escapeHtml(car.image)}" data-fallback="${escapeHtml(buildVehicleArt(car))}" alt="${escapeHtml(car.brand)} ${escapeHtml(car.model)}">
             <div class="tag-row" style="margin-top:16px;">
                 <span class="chip">${escapeHtml(car.brand)}</span>
                 <span class="chip">${escapeHtml(car.year)}</span>
@@ -1182,7 +1759,7 @@ function renderShowcaseCard(car) {
 function renderVehicleCard(car) {
     return `
         <article class="vehicle-card fade-up" data-cursor-hover="true">
-            <img class="vehicle-image" src="${car.image}" alt="${escapeHtml(car.brand)} ${escapeHtml(car.model)}">
+            <img class="vehicle-image" src="${escapeHtml(car.image)}" data-fallback="${escapeHtml(buildVehicleArt(car))}" alt="${escapeHtml(car.brand)} ${escapeHtml(car.model)}">
             <div class="tag-row">
                 <span class="chip">${escapeHtml(car.brand)}</span>
                 <span class="chip">${escapeHtml(car.bodyStyle)}</span>
@@ -1192,6 +1769,11 @@ function renderVehicleCard(car) {
                 <h3 class="card-title" style="margin-bottom:6px;">${escapeHtml(car.model)}</h3>
                 <p class="meta-text">${escapeHtml(car.location)} • ${formatMileage(car.mileage)} • ${escapeHtml(car.color)}</p>
             </div>
+            <div class="spec-row vehicle-card__specs">
+                <span class="spec-pill">${escapeHtml(car.power)}</span>
+                <span class="spec-pill">${escapeHtml(car.acceleration)}</span>
+                <span class="spec-pill">${escapeHtml(car.drivetrain)}</span>
+            </div>
             <p>${escapeHtml(car.description)}</p>
             <div class="vehicle-card__footer">
                 <span class="detail-price" style="font-size:1.2rem; margin:0;">${formatCurrency(car.price)}</span>
@@ -1199,6 +1781,18 @@ function renderVehicleCard(car) {
             </div>
         </article>
     `;
+}
+
+function attachVehicleImageFallbacks(scope = document) {
+    scope.querySelectorAll(".showcase-image, .vehicle-image, .detail-image").forEach((image) => {
+        if (image.dataset.fallbackReady === "true") return;
+        image.dataset.fallbackReady = "true";
+        image.addEventListener("error", () => {
+            const fallback = image.dataset.fallback;
+            if (!fallback || image.src === fallback) return;
+            image.src = fallback;
+        });
+    });
 }
 
 function renderDetailSpec(label, value) {
@@ -1210,7 +1804,63 @@ function renderDetailSpec(label, value) {
     `;
 }
 
+function renderVehicleView(label, car) {
+    return `
+        <figure class="vehicle-view">
+            <img src="${escapeHtml(buildVehicleViewArt(label, car))}" alt="${escapeHtml(label)} view of ${escapeHtml(car.brand)} ${escapeHtml(car.model)}">
+            <figcaption>${escapeHtml(label)} view</figcaption>
+        </figure>
+    `;
+}
+
+function inferVehicleDetails(car) {
+    const brand = String(car.brand || "").toLowerCase();
+    const bodyStyle = String(car.bodyStyle || "").toLowerCase();
+    const fuel = String(car.fuel || "").toLowerCase();
+
+    if (fuel.includes("electric")) {
+        return {
+            power: "520 hp",
+            torque: "760 Nm",
+            acceleration: "4.1 s 0-100 km/h",
+            topSpeed: "250 km/h",
+            drivetrain: "Dual-motor all-wheel drive",
+            seats: bodyStyle.includes("coupe") ? "4" : "5",
+            condition: "Battery warranty active",
+            sellerType: "SURPASS partner dealer",
+            marketNote: "Price is estimated from current premium electric vehicle listings with mileage, specification and warranty status considered."
+        };
+    }
+
+    if (brand.includes("rolls") || brand.includes("bentley") || bodyStyle.includes("luxury")) {
+        return {
+            power: "540 hp",
+            torque: "780 Nm",
+            acceleration: "4.8 s 0-100 km/h",
+            topSpeed: "250 km/h",
+            drivetrain: "All-wheel drive",
+            seats: "5",
+            condition: "Executive maintained",
+            sellerType: "Private collection",
+            marketNote: "Price is positioned around comparable luxury-market examples with mileage, cabin specification and ownership profile considered."
+        };
+    }
+
+    return {
+        power: "500 hp",
+        torque: "650 Nm",
+        acceleration: "4.0 s 0-100 km/h",
+        topSpeed: "290 km/h",
+        drivetrain: bodyStyle.includes("suv") ? "All-wheel drive" : "Rear-wheel drive",
+        seats: bodyStyle.includes("suv") ? "5" : "2",
+        condition: "Performance inspected",
+        sellerType: "SURPASS partner dealer",
+        marketNote: "Price is estimated from comparable premium listings with mileage, model year, body style and specification considered."
+    };
+}
+
 function normalizeCar(car) {
+    const detailPreset = VEHICLE_DETAIL_PRESETS[car.id] || inferVehicleDetails(car);
     const normalized = {
         id: car.id || `car-${Date.now()}`,
         brand: car.brand || BRAND_IDENTITY.name,
@@ -1224,7 +1874,16 @@ function normalizeCar(car) {
         fuel: car.fuel || "Petrol",
         transmission: car.transmission || "Automatic",
         description: car.description || `${BRAND_IDENTITY.name} curated listing.`,
-        featured: Boolean(car.featured)
+        featured: Boolean(car.featured),
+        power: car.power || detailPreset.power,
+        torque: car.torque || detailPreset.torque,
+        acceleration: car.acceleration || detailPreset.acceleration,
+        topSpeed: car.topSpeed || detailPreset.topSpeed,
+        drivetrain: car.drivetrain || detailPreset.drivetrain,
+        seats: car.seats || detailPreset.seats,
+        condition: car.condition || detailPreset.condition,
+        sellerType: car.sellerType || detailPreset.sellerType,
+        marketNote: car.marketNote || detailPreset.marketNote
     };
 
     normalized.image = car.image || buildVehicleArt(normalized);
@@ -1329,7 +1988,7 @@ function buildHeroArt() {
             <circle cx="850" cy="638" r="72" fill="#090909" stroke="#8d8d8d" stroke-width="9" />
             <circle cx="394" cy="638" r="24" fill="#d5d5d5" />
             <circle cx="850" cy="638" r="24" fill="#d5d5d5" />
-            <text x="112" y="178" fill="rgba(255,255,255,0.82)" font-family="Arial" font-size="102" font-weight="700" letter-spacing="4">AURELIA</text>
+            <text x="112" y="178" fill="rgba(255,255,255,0.82)" font-family="Arial" font-size="102" font-weight="700" letter-spacing="4">SURPASS</text>
             <text x="116" y="238" fill="rgba(255,255,255,0.46)" font-family="Arial" font-size="30" letter-spacing="12">OFFICIAL EXPERIENCE</text>
         </svg>
     `;
@@ -1372,6 +2031,66 @@ function buildVehicleArt({ brand, model, color }) {
             <text x="72" y="120" fill="rgba(255,255,255,0.72)" font-family="Georgia" font-size="34" letter-spacing="8">${safeBrand.toUpperCase()}</text>
             <text x="72" y="168" fill="rgba(255,255,255,0.92)" font-family="Georgia" font-size="78">${safeModel}</text>
             <text x="74" y="214" fill="rgba(255,255,255,0.48)" font-family="Arial" font-size="22" letter-spacing="4">${escapeHtml(color || "Graphite")} CURATED LISTING</text>
+        </svg>
+    `;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function buildVehicleViewArt(view, car) {
+    const palette = getPalette(car.color);
+    const viewKey = String(view || "Side").toLowerCase();
+    const isFront = viewKey.includes("front");
+    const isRear = viewKey.includes("rear");
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-label="${escapeHtml(view)} technical view">
+            <defs>
+                <linearGradient id="line" x1="0" x2="1">
+                    <stop offset="0%" stop-color="${palette.carStart}" stop-opacity="0.45" />
+                    <stop offset="52%" stop-color="#d9b15f" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="${palette.carEnd}" stop-opacity="0.48" />
+                </linearGradient>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+            <rect width="720" height="380" rx="28" fill="#070707" />
+            <path d="M70 298 H650" stroke="rgba(255,255,255,0.09)" />
+            <path d="M92 96 C205 45, 510 42, 632 96" stroke="rgba(217,177,95,0.18)" fill="none" />
+            ${isFront || isRear ? `
+                <g fill="none" stroke="url(#line)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+                    <path d="M220 240 C232 164, 275 118, 360 114 C445 118, 488 164, 500 240" />
+                    <path d="M196 238 C230 276, 490 276, 524 238" />
+                    <path d="M248 186 H472" />
+                    <path d="M252 228 C292 210, 428 210, 468 228" />
+                    <path d="M218 244 L154 260" />
+                    <path d="M502 244 L566 260" />
+                    <circle cx="250" cy="262" r="28" />
+                    <circle cx="470" cy="262" r="28" />
+                </g>
+                <g stroke="${isRear ? "rgba(215,31,41,0.82)" : "rgba(255,239,190,0.88)"}" stroke-width="8" stroke-linecap="round">
+                    <path d="M166 256 H220" />
+                    <path d="M500 256 H554" />
+                </g>
+            ` : `
+                <g fill="none" stroke="url(#line)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+                    <path d="M92 238 C148 222, 190 170, 250 142 C326 106, 458 108, 542 150 C590 174, 624 207, 652 238" />
+                    <path d="M164 236 H590" />
+                    <path d="M250 150 C318 122, 440 124, 512 156 L556 218 H206 Z" />
+                    <path d="M210 218 H558" />
+                    <circle cx="234" cy="254" r="44" />
+                    <circle cx="540" cy="254" r="44" />
+                    <circle cx="234" cy="254" r="14" />
+                    <circle cx="540" cy="254" r="14" />
+                </g>
+                <g stroke="rgba(255,239,190,0.9)" stroke-width="8" stroke-linecap="round">
+                    <path d="M112 240 L158 228" />
+                    <path d="M606 226 L650 238" />
+                </g>
+            `}
         </svg>
     `;
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
