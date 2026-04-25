@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURPASS | Seller Login</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/app.js"></script>
+</head>
+<body data-page="login">
+    <div class="site-shell">
+        <div data-site-header></div>
+        <main class="site-main">
+            <section class="page-banner page-banner--form page-banner--login">
+                <div class="page-banner__content">
+                    <div class="eyebrow">Seller access</div>
+                    <h1 class="page-banner__title">Enter the local seller session through a cleaner, darker gateway.</h1>
+                    <p class="body-copy">The login remains front-end only, but it now feels like part of the same premium site language as the homepage.</p>
+                </div>
+                <div class="page-banner__visual page-banner__visual--login" aria-hidden="true"></div>
+            </section>
+            <section class="section" style="padding-top:56px;">
+                <div class="detail-grid">
+                    <div class="form-shell fade-up">
+                        <div class="eyebrow">Seller access</div>
+                        <h2 class="section-title" style="margin-top:16px;">Enter your local seller session</h2>
+                        <p class="body-copy">Use your registered account or the demo credentials below to unlock the add-car listing workflow.</p>
+                        <form id="login-form" novalidate style="margin-top:24px;">
+                            <div class="form-grid">
+                                <div class="field-full">
+                                    <label for="login-username">Username</label>
+                                    <input id="login-username" name="username" type="text" placeholder="Enter seller username">
+                                </div>
+                                <div class="field-full">
+                                    <label for="login-password">Password</label>
+                                    <input id="login-password" name="password" type="password" placeholder="Enter seller password">
+                                </div>
+                            </div>
+                            <div class="hero-actions">
+                                <button class="primary-button" type="submit">Activate seller session</button>
+                                <a class="ghost-button" href="registration.html">Need an account</a>
+                            </div>
+                        </form>
+                        <div id="login-message" class="message-strip info" style="margin-top:20px;">
+                            <strong>Session inactive</strong>
+                            <span>Logging in stores a local seller session so protected actions can be demonstrated across the site.</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-card fade-up delay-1">
+                        <div class="detail-visual detail-visual--login" aria-hidden="true"></div>
+                        <div class="eyebrow">Demo credentials</div>
+                        <h2 class="section-title" style="margin-top:16px;">Test the experience immediately</h2>
+                        <p class="body-copy">
+                            A demo account is preloaded into localStorage so your whole seller flow can be tested without any setup friction.
+                        </p>
+                        <div class="detail-specs" style="margin-top:24px;">
+                            <div class="detail-spec">
+                                <span>Username</span>
+                                <strong>aurelia01</strong>
+                            </div>
+                            <div class="detail-spec">
+                                <span>Password</span>
+                                <strong>drive2026</strong>
+                            </div>
+                            <div class="detail-spec">
+                                <span>Redirect</span>
+                                <strong>Seller Hub or Add Car</strong>
+                            </div>
+                            <div class="detail-spec">
+                                <span>Storage mode</span>
+                                <strong>Browser localStorage</strong>
+                            </div>
+                        </div>
+                        <div class="stack-actions" style="margin-top:24px;">
+                            <a class="secondary-button" href="add-car.html">Open listing desk</a>
+                            <a class="secondary-button" href="search.html">Browse inventory first</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div data-site-footer></div>
+    </div>
+</body>
+</html>
