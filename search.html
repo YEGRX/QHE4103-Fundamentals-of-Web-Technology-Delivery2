@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURPASS | Search Cars</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/app.js"></script>
+</head>
+<body data-page="search">
+    <div class="site-shell">
+        <div data-site-header></div>
+        <main class="site-main">
+            <section class="page-banner page-banner--search">
+                <div class="page-banner__content">
+                    <div class="eyebrow">Inventory search</div>
+                    <h1 class="page-banner__title">Search remains practical, but the framing now feels more like a branded gallery.</h1>
+                    <p class="body-copy">Filter by model and year, then move into richer detail cards with photography, specifications and market context.</p>
+                </div>
+            </section>
+            <section class="section" style="padding-top:56px;">
+                <div class="section-intro">
+                    <div>
+                        <div class="eyebrow">Search inventory</div>
+                        <h2 class="section-title" style="margin-top:16px;">Filter by model and year, then move into detail</h2>
+                    </div>
+                    <p class="body-copy" style="max-width:40rem;">
+                        Search by model, year, brand, body style or energy type, then compare curated cars with refined sorting and clean empty states.
+                    </p>
+                </div>
+                <div class="search-grid">
+                    <aside class="filter-panel fade-up">
+                        <form id="search-form">
+                            <div class="field-full">
+                                <label for="search-model">Model or brand</label>
+                                <input id="search-model" name="model" type="text" placeholder="e.g. Taycan, Porsche, AMG">
+                            </div>
+                            <div class="field-full" style="margin-top:16px;">
+                                <label for="search-year">Year</label>
+                                <input id="search-year" name="year" type="text" placeholder="e.g. 2024">
+                            </div>
+                            <div class="field-full" style="margin-top:16px;">
+                                <label for="search-brand">Brand</label>
+                                <select id="search-brand" name="brand">
+                                    <option value="">All brands</option>
+                                </select>
+                            </div>
+                            <div class="field-full" style="margin-top:16px;">
+                                <label for="search-body">Body style</label>
+                                <select id="search-body" name="bodyStyle">
+                                    <option value="">All body styles</option>
+                                </select>
+                            </div>
+                            <div class="field-full" style="margin-top:16px;">
+                                <label for="search-fuel">Fuel type</label>
+                                <select id="search-fuel" name="fuel">
+                                    <option value="">All fuel types</option>
+                                </select>
+                            </div>
+                            <div class="field-full" style="margin-top:16px;">
+                                <label for="search-sort">Sort by</label>
+                                <select id="search-sort" name="sort">
+                                    <option value="featured">Featured first</option>
+                                    <option value="price-asc">Price: low to high</option>
+                                    <option value="price-desc">Price: high to low</option>
+                                    <option value="year-desc">Year: newest first</option>
+                                    <option value="year-asc">Year: oldest first</option>
+                                </select>
+                            </div>
+                            <div class="hero-actions">
+                                <button class="primary-button" type="submit">Search cars</button>
+                                <button class="ghost-button" type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </aside>
+
+                    <div class="panel fade-up delay-1">
+                        <div class="result-toolbar">
+                            <div>
+                                <div class="eyebrow">Curated results</div>
+                                <p id="search-result-count" class="body-copy" style="margin:14px 0 0;">Loading collection...</p>
+                            </div>
+                            <a class="secondary-button" href="add-car.html">Add new listing</a>
+                        </div>
+                        <div id="search-empty" class="empty-state">
+                            <h3 class="card-title" style="margin-top:0;">No matching vehicles</h3>
+                            <p>Try a broader brand keyword or clear the year filter to return to the full gallery.</p>
+                        </div>
+                        <div id="search-results" class="vehicle-results"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div data-site-footer></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURPASS | Seller Registration</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/app.js"></script>
+</head>
+<body data-page="register">
+    <div class="site-shell">
+        <div data-site-header></div>
+        <main class="site-main">
+            <section class="page-banner page-banner--form page-banner--registration">
+                <div class="page-banner__content">
+                    <div class="eyebrow">Seller onboarding</div>
+                    <h1 class="page-banner__title">Registration framed like a private client onboarding desk.</h1>
+                    <p class="body-copy">Clear validation, restrained motion and a darker brand system keep seller onboarding calm and confident.</p>
+                </div>
+                <div class="page-banner__visual page-banner__visual--registration" aria-hidden="true"></div>
+            </section>
+            <section class="hero-section">
+                <div class="hero-copy fade-up">
+                    <div class="eyebrow">Seller onboarding</div>
+                    <h2 class="display-title">Create a quiet, credible profile.</h2>
+                    <p class="lead">
+                        Every field is checked before the profile is created, giving sellers a clear and polished path into the SURPASS listing experience.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="primary-button" href="login.html">Already registered</a>
+                        <a class="secondary-button" href="seller.html">Back to seller hub</a>
+                    </div>
+                    <div class="support-visual support-visual--registration" aria-hidden="true"></div>
+                </div>
+                <div class="form-shell fade-up delay-1">
+                    <form id="registration-form" novalidate>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="name">Full name</label>
+                                <input id="name" name="name" type="text" placeholder="Letters and spaces only">
+                                <div class="field-error" data-error-for="name"></div>
+                            </div>
+                            <div class="field">
+                                <label for="phone">Phone number</label>
+                                <input id="phone" name="phone" type="text" placeholder="China mainland mobile number">
+                                <div class="field-error" data-error-for="phone"></div>
+                            </div>
+                            <div class="field-full">
+                                <label for="address">Address</label>
+                                <input id="address" name="address" type="text" placeholder="Letters, numbers and spaces only">
+                                <div class="field-error" data-error-for="address"></div>
+                            </div>
+                            <div class="field">
+                                <label for="email">Email</label>
+                                <input id="email" name="email" type="email" placeholder="Ending in .cn or .com">
+                                <div class="field-error" data-error-for="email"></div>
+                            </div>
+                            <div class="field">
+                                <label for="username">Username</label>
+                                <input id="username" name="username" type="text" placeholder="At least 6 letters or numbers">
+                                <div class="field-error" data-error-for="username"></div>
+                            </div>
+                            <div class="field-full">
+                                <label for="password">Password</label>
+                                <input id="password" name="password" type="password" placeholder="At least 6 letters or numbers">
+                                <div class="field-error" data-error-for="password"></div>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="primary-button" type="submit">Create seller profile</button>
+                            <button class="ghost-button" type="reset">Reset form</button>
+                        </div>
+                    </form>
+                    <div id="registration-message" class="message-strip info" style="margin-top:20px;">
+                        <strong>Validation ready</strong>
+                        <span>Fill in the form to create a seller profile that can be used on the login page.</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div data-site-footer></div>
+    </div>
+</body>
+</html>
