@@ -8,6 +8,7 @@ functions.
 
 Planned endpoints for this conversation:
 
+- `register.php`: handled by the registration member, saves new sellers into MySQL using MySQLi.
 - `login.php`: handled by `liboyiboop`, verifies seller credentials from MySQL and starts a PHP session.
 - `logout.php`: handled by `liboyiboop`, clears the PHP session.
 - `session.php`: handled by `liboyiboop`, returns current login state for the shared header and protected pages.
