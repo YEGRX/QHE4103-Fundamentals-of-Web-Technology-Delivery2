@@ -2,9 +2,10 @@
 
 This folder is reserved for PHP endpoints.
 
-`bootstrap.php` is the shared foundation for every endpoint. It loads the PDO
-database connection, starts the PHP session, and provides common JSON helper
-functions.
+`bootstrap.php` is the shared foundation for every endpoint. It loads the
+database settings, starts the PHP session, and provides common JSON helper
+functions. `register.php` uses MySQLi so the registration work follows the
+Lecture 13 style.
 
 Planned endpoints for this conversation:
 
@@ -16,7 +17,7 @@ Planned endpoints for this conversation:
 
 All endpoints should reuse `config/database.php`.
 
-Recommended endpoint pattern:
+Recommended endpoint pattern for endpoints that use the shared PDO helper:
 
 ```php
 <?php
