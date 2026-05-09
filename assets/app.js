@@ -14,6 +14,12 @@ const STORAGE_KEYS = {
     cars: "ocs_cars"
 };
 
+const API_ENDPOINTS = {
+    login: "api/login.php",
+    logout: "api/logout.php",
+    session: "api/session.php"
+};
+
 const DEMO_USER = {
     name: "SURPASS Demo Seller",
     address: "88 Bund Financial Plaza",
@@ -731,6 +737,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderShell();
     bindHeaderEvents();
     hydrateCommonViews();
+    syncSessionFromServer();
     routePage();
     markCursorTargets();
     initCustomCursor();
@@ -774,9 +781,8 @@ function renderShell() {
                     </nav>
                     <div class="header-status">
                         <div class="session-pill" data-session-pill>${sessionMarkup}</div>
-                        ${session
-                            ? '<button class="header-logout" type="button" data-logout-button data-cursor-hover>Log out</button>'
-                            : '<a class="ghost-button" href="login.html" data-cursor-hover>Seller access</a>'}
+                        <button class="header-logout" type="button" data-logout-button data-cursor-hover ${session ? "" : "hidden"}>Log out</button>
+                        <a class="ghost-button" href="login.html" data-login-access data-cursor-hover ${session ? "hidden" : ""}>Seller access</a>
                     </div>
                     <button class="menu-toggle" type="button" aria-expanded="false" data-menu-toggle data-cursor-hover>Menu</button>
                 </div>
@@ -834,7 +840,16 @@ function bindHeaderEvents() {
     }
 
     document.querySelectorAll("[data-logout-button]").forEach((button) => {
-        button.addEventListener("click", () => {
+        button.addEventListener("click", async () => {
+            button.disabled = true;
+            try {
+                await requestJson(API_ENDPOINTS.logout, {
+                    method: "POST",
+                    body: {}
+                });
+            } catch (error) {
+                // The local mirror is still cleared so the UI never traps a user in a stale state.
+            }
             localStorage.removeItem(STORAGE_KEYS.session);
             window.location.href = "index.html";
         });
@@ -847,6 +862,13 @@ function hydrateCommonViews() {
         node.innerHTML = session
             ? `Signed in as <strong>${escapeHtml(session.username)}</strong>`
             : "Guest mode active";
+    });
+    document.querySelectorAll("[data-logout-button]").forEach((button) => {
+        button.hidden = !session;
+        button.disabled = false;
+    });
+    document.querySelectorAll("[data-login-access]").forEach((link) => {
+        link.hidden = !!session;
     });
     document.querySelectorAll("[data-current-year]").forEach((node) => {
         node.textContent = new Date().getFullYear();
@@ -1147,32 +1169,46 @@ function initLoginPage() {
     const redirect = getSafeRedirect();
     if (!form || !message) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const username = form.elements.username.value.trim();
         const password = form.elements.password.value.trim();
+        const submitButton = form.querySelector('button[type="submit"]');
 
         if (!username || !password) {
             showMessage(message, "error", "Missing credentials", "Enter both username and password before attempting to sign in.");
             return;
         }
 
-        const matchedUser = getUsers().find((user) => user.username === username && user.password === password);
-        if (!matchedUser) {
-            showMessage(message, "error", "Unable to sign in", "The credentials do not match our seller records. Try the concierge account or your registered details.");
-            return;
+        if (submitButton) submitButton.disabled = true;
+        showMessage(message, "info", "Checking seller records", "Connecting to the seller database...");
+
+        try {
+            const response = await requestJson(API_ENDPOINTS.login, {
+                method: "POST",
+                body: { username, password }
+            });
+            const seller = normalizeSessionUser(response.data?.seller);
+
+            if (!seller) {
+                throw new Error("The server response did not include seller details.");
+            }
+
+            saveSession(seller);
+            hydrateCommonViews();
+            showMessage(message, "success", "Seller session activated", `You are now signed in. Redirecting you to ${redirect === "add-car.html" ? "the listing desk" : "the seller hub"}...`);
+            window.setTimeout(() => {
+                window.location.href = redirect;
+            }, 850);
+        } catch (error) {
+            showMessage(
+                message,
+                "error",
+                "Unable to sign in",
+                error.message || "The credentials do not match our seller records."
+            );
+            if (submitButton) submitButton.disabled = false;
         }
-
-        saveSession({
-            username: matchedUser.username,
-            name: matchedUser.name,
-            email: matchedUser.email
-        });
-
-        showMessage(message, "success", "Seller session activated", `You are now signed in. Redirecting you to ${redirect === "add-car.html" ? "the listing desk" : "the seller hub"}...`);
-        window.setTimeout(() => {
-            window.location.href = redirect;
-        }, 850);
     });
 }
 
@@ -1672,6 +1708,36 @@ function saveSession(session) {
     localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(session));
 }
 
+async function syncSessionFromServer() {
+    try {
+        const response = await requestJson(API_ENDPOINTS.session, {
+            method: "GET"
+        });
+        const seller = normalizeSessionUser(response.data?.seller);
+
+        if (response.data?.authenticated && seller) {
+            saveSession(seller);
+        } else {
+            localStorage.removeItem(STORAGE_KEYS.session);
+        }
+
+        hydrateCommonViews();
+    } catch (error) {
+        // Static file previews cannot call PHP endpoints, so keep the local mirror in that mode.
+    }
+}
+
+function normalizeSessionUser(rawSeller) {
+    if (!rawSeller || typeof rawSeller !== "object") return null;
+
+    return {
+        id: rawSeller.id || rawSeller.seller_id || rawSeller.sellerId || "",
+        username: rawSeller.username || "",
+        name: rawSeller.name || rawSeller.username || "",
+        email: rawSeller.email || ""
+    };
+}
+
 function getCars() {
     const cars = readJson(STORAGE_KEYS.cars);
     return Array.isArray(cars) ? cars.map(normalizeCar) : [];
@@ -1687,6 +1753,35 @@ function readJson(key) {
     } catch (error) {
         return null;
     }
+}
+
+async function requestJson(url, options = {}) {
+    const method = (options.method || "GET").toUpperCase();
+    const fetchOptions = {
+        method,
+        credentials: "same-origin",
+        headers: {
+            Accept: "application/json",
+            ...(options.headers || {})
+        }
+    };
+
+    if (method !== "GET") {
+        fetchOptions.headers["Content-Type"] = "application/json";
+        fetchOptions.body = JSON.stringify(options.body || {});
+    }
+
+    const response = await fetch(url, fetchOptions);
+    const contentType = response.headers.get("content-type") || "";
+    const payload = contentType.includes("application/json")
+        ? await response.json()
+        : { success: false, message: await response.text() };
+
+    if (!response.ok || payload.success === false) {
+        throw new Error(payload.message || "The server could not complete the request.");
+    }
+
+    return payload;
 }
 
 function validateRegistrationField(field, rawValue) {
