@@ -1118,7 +1118,7 @@ function initRegistrationPage() {
         input.addEventListener("input", () => clearFieldError(field));
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         let valid = true;
 
@@ -1129,37 +1129,43 @@ function initRegistrationPage() {
             }
         });
 
-        const username = form.elements.username.value.trim();
-        const users = getUsers();
-        if (users.some((user) => user.username.toLowerCase() === username.toLowerCase())) {
-            setFieldError("username", "This username is already taken. Choose another one.");
-            valid = false;
-        }
-
         if (!valid) {
             showMessage(message, "error", "Registration needs attention", "Please correct the highlighted fields and try again.");
             return;
         }
 
-        const newUser = {
-            name: form.elements.name.value.trim(),
-            address: form.elements.address.value.trim(),
-            phone: form.elements.phone.value.trim(),
-            email: form.elements.email.value.trim(),
-            username,
-            password: form.elements.password.value.trim()
-        };
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
 
-        users.push(newUser);
-        saveUsers(users);
-        form.reset();
-        fields.forEach(clearFieldError);
-        showMessage(
-            message,
-            "success",
-            "Registration completed",
-            "Your seller profile is ready. Use the login page to activate your seller session."
-        );
+        try {
+            const response = await fetch("api/register.php", {
+                method: "POST",
+                body: new FormData(form)
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                if (response.status === 409) {
+                    setFieldError("username", "This username or email is already registered.");
+                    setFieldError("email", "This username or email is already registered.");
+                }
+                showMessage(message, "error", "Registration needs attention", result.message || "The seller could not be registered.");
+                return;
+            }
+
+            form.reset();
+            fields.forEach(clearFieldError);
+            showMessage(
+                message,
+                "success",
+                "Registration completed",
+                "Your seller profile has been saved in the MySQL database. Use the login page to activate your seller session."
+            );
+        } catch (error) {
+            showMessage(message, "error", "Registration unavailable", "Please check that XAMPP Apache and MySQL are running, then try again.");
+        } finally {
+            if (submitButton) submitButton.disabled = false;
+        }
     });
 }
 
