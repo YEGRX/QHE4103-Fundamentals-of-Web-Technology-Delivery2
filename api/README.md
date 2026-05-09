@@ -12,9 +12,14 @@ Implemented login endpoints:
 - `logout.php`: handled by `liboyiboop`, clears the PHP session.
 - `session.php`: handled by `liboyiboop`, returns current login state for the shared header and protected pages.
 
-Planned search endpoint:
+Implemented search endpoint:
 
 - `search.php`: handled by `tonghaoge`, searches cars from MySQL by model and year, with optional filters.
+
+Pending endpoints from other members:
+
+- `register.php`: database-backed seller registration flow.
+- `add-car.php`: database-backed vehicle publishing flow.
 
 All endpoints should reuse `config/database.php`.
 
