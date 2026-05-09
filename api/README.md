@@ -4,8 +4,10 @@ This folder is reserved for PHP endpoints.
 
 Implemented endpoints:
 
-- `login.php`: handles seller login.
-- `search.php`: searches cars from MySQL by model and year, with optional filters.
+- `login.php`: handled by `liboyiboop`, verifies seller credentials from MySQL and starts a PHP session.
+- `logout.php`: handled by `liboyiboop`, clears the PHP session.
+- `session.php`: handled by `liboyiboop`, returns current login state for the shared header and protected pages.
+- `search.php`: handled by `tonghaoge`, searches cars from MySQL by model and year, with optional filters.
 
 Pending endpoints from other members:
 
@@ -29,3 +31,4 @@ jsonResponse([
     'message' => 'Request handled.',
     'data' => [],
 ]);
+```
