@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 require_once __DIR__ . '/../config/database.php';
 
@@ -7,59 +6,78 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-function jsonResponse(array $payload, int $statusCode = 200): void
+function jsonResponse($payload, $statusCode = 200)
 {
     http_response_code($statusCode);
     header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    echo json_encode($payload);
     exit;
 }
 
-function readJsonBody(): array
+function readJsonBody()
 {
-    $rawBody = file_get_contents('php://input');
+    $raw = file_get_contents('php://input');
 
-    if ($rawBody === false || trim($rawBody) === '') {
+    if ($raw === false || trim($raw) === '') {
         return [];
     }
 
-    $decoded = json_decode($rawBody, true);
+    $data = json_decode($raw, true);
 
-    if (!is_array($decoded)) {
+    if (!is_array($data)) {
         jsonResponse([
             'success' => false,
-            'message' => 'Invalid JSON request body.',
+            'message' => 'Invalid request body.',
         ], 400);
     }
 
-    return $decoded;
+    return $data;
 }
 
-function requireMethod(string $method): void
+function requireMethod($method)
 {
-    if ($_SERVER['REQUEST_METHOD'] !== strtoupper($method)) {
+    if (strtoupper($_SERVER['REQUEST_METHOD'] ?? '') !== strtoupper($method)) {
         jsonResponse([
             'success' => false,
-            'message' => 'Unsupported request method.',
+            'message' => 'Request method not allowed.',
         ], 405);
     }
 }
 
-function currentSeller(): ?array
+function currentSeller()
 {
-    return $_SESSION['seller'] ?? null;
+    if (!isset($_SESSION['seller']) || !is_array($_SESSION['seller'])) {
+        return null;
+    }
+
+    return $_SESSION['seller'];
 }
 
-function requireSeller(): array
+function requireSeller()
 {
     $seller = currentSeller();
 
     if (!$seller) {
         jsonResponse([
             'success' => false,
-            'message' => 'Please sign in before continuing.',
+            'message' => 'Please login first.',
         ], 401);
     }
 
     return $seller;
+}
+
+function bindStatementParams($statement, $types, $values)
+{
+    if ($types === '' || empty($values)) {
+        return;
+    }
+
+    $params = [$statement, $types];
+
+    foreach ($values as $index => $value) {
+        $params[] = &$values[$index];
+    }
+
+    call_user_func_array('mysqli_stmt_bind_param', $params);
 }

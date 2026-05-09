@@ -1,6 +1,3 @@
--- Phase B shared database schema for the Online Car Sale / SURPASS website.
--- Run this file once before testing PHP registration, login, add-car, and search.
-
 CREATE DATABASE IF NOT EXISTS online_car_sale
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;

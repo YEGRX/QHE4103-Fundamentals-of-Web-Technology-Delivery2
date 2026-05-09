@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 require_once __DIR__ . '/bootstrap.php';
 
@@ -24,7 +23,7 @@ session_destroy();
 
 jsonResponse([
     'success' => true,
-    'message' => 'Seller session cleared.',
+    'message' => 'Logged out.',
     'data' => [
         'authenticated' => false,
     ],

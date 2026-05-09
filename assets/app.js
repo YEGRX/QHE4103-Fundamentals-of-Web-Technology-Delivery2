@@ -731,13 +731,13 @@ const VEHICLE_DETAIL_PRESETS = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     seedStorage();
     applyInterfaceMode();
+    await syncSessionFromServer();
     renderShell();
     bindHeaderEvents();
     hydrateCommonViews();
-    syncSessionFromServer();
     routePage();
     markCursorTargets();
     initCustomCursor();
@@ -1734,7 +1734,7 @@ async function syncSessionFromServer() {
 
         hydrateCommonViews();
     } catch (error) {
-        // Static file previews cannot call PHP endpoints, so keep the local mirror in that mode.
+        localStorage.removeItem(STORAGE_KEYS.session);
     }
 }
 
@@ -1742,7 +1742,7 @@ function normalizeSessionUser(rawSeller) {
     if (!rawSeller || typeof rawSeller !== "object") return null;
 
     return {
-        id: rawSeller.id || rawSeller.seller_id || rawSeller.sellerId || "",
+        seller_id: Number(rawSeller.seller_id || rawSeller.id || rawSeller.sellerId || 0),
         username: rawSeller.username || "",
         name: rawSeller.name || rawSeller.username || "",
         email: rawSeller.email || ""

@@ -1,8 +1,3 @@
--- Optional development seed data.
--- Demo seller credentials:
---   username: surpass01
---   password: drive2026
-
 USE online_car_sale;
 
 INSERT INTO sellers (
@@ -13,16 +8,17 @@ INSERT INTO sellers (
     username,
     password_hash
 ) VALUES (
-    'SURPASS Demo Seller',
+    'SURPASS Seller',
     '88 Century Avenue, Shanghai',
     '13812345678',
-    'seller@surpass.example',
+    'seller@surpass.com',
     'surpass01',
     '$2y$10$fhTBLq1jv0ZjQpJr8ya8JejD847O9xJeJtSn/ZPrAccxs2kpw1wkO'
 ) ON DUPLICATE KEY UPDATE
     name = VALUES(name),
     address = VALUES(address),
     phone = VALUES(phone),
+    email = VALUES(email),
     password_hash = VALUES(password_hash);
 
 INSERT INTO cars (

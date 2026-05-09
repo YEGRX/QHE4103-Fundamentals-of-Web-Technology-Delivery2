@@ -1,16 +1,7 @@
 <?php
-declare(strict_types=1);
-
-/*
- * Shared database connection for Phase B.
- *
- * Update these defaults to match the local MySQL/MariaDB environment used for
- * demonstration. Environment variables are supported so the same file can work
- * on different machines without code changes.
- */
 
 if (!defined('DB_HOST')) {
-    define('DB_HOST', getenv('OCS_DB_HOST') ?: '127.0.0.1');
+    define('DB_HOST', getenv('OCS_DB_HOST') ?: 'localhost');
 }
 
 if (!defined('DB_PORT')) {
@@ -29,26 +20,18 @@ if (!defined('DB_PASS')) {
     define('DB_PASS', getenv('OCS_DB_PASS') ?: '');
 }
 
-function getDatabaseConnection(): PDO
-{
-    static $pdo = null;
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($pdo instanceof PDO) {
-        return $pdo;
+function getDatabaseConnection()
+{
+    static $connection = null;
+
+    if ($connection instanceof mysqli) {
+        return $connection;
     }
 
-    $dsn = sprintf(
-        'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
-        DB_HOST,
-        DB_PORT,
-        DB_NAME
-    );
+    $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, (int)DB_PORT);
+    mysqli_set_charset($connection, 'utf8mb4');
 
-    $pdo = new PDO($dsn, DB_USER, DB_PASS, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-    ]);
-
-    return $pdo;
+    return $connection;
 }
