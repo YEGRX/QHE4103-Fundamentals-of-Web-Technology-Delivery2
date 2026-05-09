@@ -2,22 +2,21 @@
 
 This folder is reserved for PHP endpoints.
 
-`bootstrap.php` is the shared foundation for every endpoint. It loads the
-database settings, starts the PHP session, and provides common JSON helper
-functions. `register.php` uses MySQLi so the registration work follows the
-Lecture 13 style.
+Implemented endpoints:
 
-Planned endpoints for this conversation:
-
-- `register.php`: handled by the registration member, saves new sellers into MySQL using MySQLi.
 - `login.php`: handled by `liboyiboop`, verifies seller credentials from MySQL and starts a PHP session.
 - `logout.php`: handled by `liboyiboop`, clears the PHP session.
 - `session.php`: handled by `liboyiboop`, returns current login state for the shared header and protected pages.
 - `search.php`: handled by `tonghaoge`, searches cars from MySQL by model and year, with optional filters.
 
+Pending endpoints from other members:
+
+- `register.php`: database-backed seller registration flow.
+- `add-car.php`: database-backed vehicle publishing flow.
+
 All endpoints should reuse `config/database.php`.
 
-Recommended endpoint pattern for endpoints that use the shared PDO helper:
+Recommended endpoint pattern:
 
 ```php
 <?php
