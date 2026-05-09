@@ -1348,33 +1348,104 @@ function initSearchPage() {
         form.elements[name]?.addEventListener("change", () => performSearch());
     });
 
-    function performSearch() {
-        const model = form.elements.model.value.trim().toLowerCase();
-        const year = form.elements.year.value.trim();
-        const brand = form.elements.brand?.value || "";
-        const bodyStyle = form.elements.bodyStyle?.value || "";
-        const fuel = form.elements.fuel?.value || "";
-        const sort = form.elements.sort.value;
+    let searchRequestId = 0;
+
+    async function performSearch() {
+        const requestId = ++searchRequestId;
+        const query = getSearchQuery(form);
+        updateSearchUrl(query);
+        count.textContent = "Searching database inventory...";
+        empty.style.display = "none";
+
+        try {
+            const cars = await requestSearchResults(query);
+            if (requestId !== searchRequestId) return;
+            mergeApiCarsIntoLocalStorage(cars);
+            renderSearchResults(cars, false);
+        } catch (error) {
+            if (requestId !== searchRequestId) return;
+            const cars = filterLocalCars(query);
+            renderSearchResults(cars, true);
+        }
+    }
+
+    function renderSearchResults(cars, usingLocalFallback) {
+        const suffix = usingLocalFallback ? " available in local preview" : " available from database";
+        count.textContent = cars.length === 1 ? `1 vehicle${suffix}` : `${cars.length} vehicles${suffix}`;
+        empty.style.display = cars.length ? "none" : "block";
+        results.innerHTML = cars.map(renderVehicleCard).join("");
+        attachVehicleImageFallbacks(results);
+    }
+
+    function getSearchQuery(searchForm) {
+        return {
+            model: searchForm.elements.model.value.trim(),
+            year: searchForm.elements.year.value.trim(),
+            brand: searchForm.elements.brand?.value || "",
+            bodyStyle: searchForm.elements.bodyStyle?.value || "",
+            fuel: searchForm.elements.fuel?.value || "",
+            sort: searchForm.elements.sort.value
+        };
+    }
+
+    function filterLocalCars(query) {
+        const model = query.model.toLowerCase();
         let cars = getCars();
 
         cars = cars.filter((car) => {
             const matchesModel = !model || `${car.brand} ${car.model}`.toLowerCase().includes(model);
-            const matchesYear = !year || String(car.year) === year;
-            const matchesBrand = !brand || car.brand === brand;
-            const matchesBody = !bodyStyle || car.bodyStyle === bodyStyle;
-            const matchesFuel = !fuel || car.fuel === fuel;
+            const matchesYear = !query.year || String(car.year) === query.year;
+            const matchesBrand = !query.brand || car.brand === query.brand;
+            const matchesBody = !query.bodyStyle || car.bodyStyle === query.bodyStyle;
+            const matchesFuel = !query.fuel || car.fuel === query.fuel;
             return matchesModel && matchesYear && matchesBrand && matchesBody && matchesFuel;
         });
 
-        cars = sortCars(cars, sort);
-        updateSearchUrl({ model, year, brand, bodyStyle, fuel, sort });
-
-        count.textContent = cars.length === 1 ? "1 vehicle available" : `${cars.length} vehicles available`;
-        empty.style.display = cars.length ? "none" : "block";
-
-        results.innerHTML = cars.map(renderVehicleCard).join("");
-        attachVehicleImageFallbacks(results);
+        return sortCars(cars, query.sort);
     }
+}
+
+async function requestSearchResults(query) {
+    const params = new URLSearchParams();
+
+    if (query.model) params.set("model", query.model);
+    if (query.year) params.set("year", query.year);
+    if (query.brand) params.set("brand", query.brand);
+    if (query.bodyStyle) params.set("bodyStyle", query.bodyStyle);
+    if (query.fuel) params.set("fuel", query.fuel);
+    if (query.sort && query.sort !== "featured") params.set("sort", query.sort);
+
+    const response = await fetch(`api/search.php?${params.toString()}`, {
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+            Accept: "application/json"
+        }
+    });
+    const contentType = response.headers.get("content-type") || "";
+    const payload = contentType.includes("application/json")
+        ? await response.json()
+        : { success: false, message: await response.text() };
+
+    if (!response.ok || payload.success === false) {
+        throw new Error(payload.message || "Database search is unavailable.");
+    }
+
+    const cars = Array.isArray(payload.data?.cars) ? payload.data.cars : [];
+    return cars.map(normalizeCar);
+}
+
+function mergeApiCarsIntoLocalStorage(apiCars) {
+    if (!Array.isArray(apiCars) || apiCars.length === 0) return;
+
+    const localCars = getCars();
+    const merged = new Map(localCars.map((car) => [car.id, car]));
+
+    apiCars.forEach((car) => {
+        merged.set(car.id, normalizeCar(car));
+    });
+
+    saveCars([...merged.values()]);
 }
 
 function initDetailPage() {
