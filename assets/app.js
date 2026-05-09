@@ -1279,7 +1279,7 @@ function initAddCarPage() {
         preview.dataset.imageData = dataUrl;
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const validation = validateCarForm(form);
         if (!validation.valid) {
@@ -1287,41 +1287,46 @@ function initAddCarPage() {
             return;
         }
 
-        const storedImage = preview.dataset.imageData || buildVehicleArt({
-            brand: form.elements.brand.value.trim(),
-            model: form.elements.model.value.trim(),
-            color: form.elements.color.value.trim()
-        });
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
 
-        const newCar = normalizeCar({
-            id: `car-${Date.now()}`,
-            brand: form.elements.brand.value.trim(),
-            model: form.elements.model.value.trim(),
-            year: Number(form.elements.year.value.trim()),
-            color: form.elements.color.value.trim(),
-            location: form.elements.location.value.trim(),
-            price: Number(form.elements.price.value.trim()),
-            bodyStyle: form.elements.bodyStyle.value.trim(),
-            mileage: Number(form.elements.mileage.value.trim()),
-            fuel: form.elements.fuel.value,
-            transmission: form.elements.transmission.value,
-            description: form.elements.description.value.trim() || "A newly listed luxury vehicle added by the active seller session.",
-            image: storedImage,
-            featured: false
-        });
+        const formData = new FormData(form);
+        formData.delete("imageFile");
+        formData.append("image_url", "assets/generated/seller-add-car.png");
 
-        const cars = getCars();
-        cars.unshift(newCar);
-        saveCars(cars);
-        form.reset();
-        preview.dataset.imageData = "";
-        syncGeneratedPreview(form, preview);
-        showMessage(
-            message,
-            "success",
-            "Vehicle added to inventory",
-            `The listing for ${newCar.brand} ${newCar.model} is now available in the search gallery.`
-        );
+        try {
+            const response = await fetch("api/add-car.php", {
+                method: "POST",
+                body: formData,
+                credentials: "same-origin"
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                if (response.status === 401) {
+                    showMessage(message, "error", "Seller login required", result.message || "Please log in before adding a car.");
+                    return;
+                }
+
+                showMessage(message, "error", "Listing was not saved", result.message || "Please check the car details and try again.");
+                return;
+            }
+
+            const car = result.data || {};
+            form.reset();
+            preview.dataset.imageData = "";
+            syncGeneratedPreview(form, preview);
+            showMessage(
+                message,
+                "success",
+                "Vehicle saved in MySQL",
+                `${car.brand || "This car"} ${car.model || ""} has been added to the cars table.`
+            );
+        } catch (error) {
+            showMessage(message, "error", "Add car unavailable", "Please check that XAMPP Apache and MySQL are running, then try again.");
+        } finally {
+            if (submitButton) submitButton.disabled = false;
+        }
     });
 }
 
