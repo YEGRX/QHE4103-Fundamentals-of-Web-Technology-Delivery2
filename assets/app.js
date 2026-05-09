@@ -17,7 +17,8 @@ const STORAGE_KEYS = {
 const API_ENDPOINTS = {
     login: "api/login.php",
     logout: "api/logout.php",
-    session: "api/session.php"
+    session: "api/session.php",
+    search: "api/search.php"
 };
 
 const DEMO_USER = {
@@ -1372,17 +1373,17 @@ function initSearchPage() {
             const cars = await requestSearchResults(query);
             if (requestId !== searchRequestId) return;
             mergeApiCarsIntoLocalStorage(cars);
-            renderSearchResults(cars, false);
+            renderSearchResults(cars);
         } catch (error) {
             if (requestId !== searchRequestId) return;
-            const cars = filterLocalCars(query);
-            renderSearchResults(cars, true);
+            count.textContent = error.message || "Database search is unavailable.";
+            empty.style.display = "block";
+            results.innerHTML = "";
         }
     }
 
-    function renderSearchResults(cars, usingLocalFallback) {
-        const suffix = usingLocalFallback ? " available in local preview" : " available from database";
-        count.textContent = cars.length === 1 ? `1 vehicle${suffix}` : `${cars.length} vehicles${suffix}`;
+    function renderSearchResults(cars) {
+        count.textContent = cars.length === 1 ? "1 vehicle found" : `${cars.length} vehicles found`;
         empty.style.display = cars.length ? "none" : "block";
         results.innerHTML = cars.map(renderVehicleCard).join("");
         attachVehicleImageFallbacks(results);
@@ -1399,21 +1400,6 @@ function initSearchPage() {
         };
     }
 
-    function filterLocalCars(query) {
-        const model = query.model.toLowerCase();
-        let cars = getCars();
-
-        cars = cars.filter((car) => {
-            const matchesModel = !model || `${car.brand} ${car.model}`.toLowerCase().includes(model);
-            const matchesYear = !query.year || String(car.year) === query.year;
-            const matchesBrand = !query.brand || car.brand === query.brand;
-            const matchesBody = !query.bodyStyle || car.bodyStyle === query.bodyStyle;
-            const matchesFuel = !query.fuel || car.fuel === query.fuel;
-            return matchesModel && matchesYear && matchesBrand && matchesBody && matchesFuel;
-        });
-
-        return sortCars(cars, query.sort);
-    }
 }
 
 async function requestSearchResults(query) {
@@ -1426,7 +1412,7 @@ async function requestSearchResults(query) {
     if (query.fuel) params.set("fuel", query.fuel);
     if (query.sort && query.sort !== "featured") params.set("sort", query.sort);
 
-    const response = await fetch(`api/search.php?${params.toString()}`, {
+    const response = await fetch(`${API_ENDPOINTS.search}?${params.toString()}`, {
         method: "GET",
         credentials: "same-origin",
         headers: {

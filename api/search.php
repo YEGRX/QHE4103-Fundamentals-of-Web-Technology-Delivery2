@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 require_once __DIR__ . '/bootstrap.php';
 
@@ -15,7 +14,7 @@ $sort = trim((string)($_GET['sort'] ?? 'featured'));
 if ($year !== '' && !preg_match('/^\d{4}$/', $year)) {
     jsonResponse([
         'success' => false,
-        'message' => 'Year must use a four-digit format, for example 2024.',
+        'message' => 'Please enter a four-digit year.',
     ], 400);
 }
 
@@ -29,97 +28,108 @@ $sortOptions = [
 
 $orderBy = $sortOptions[$sort] ?? $sortOptions['featured'];
 $where = [];
-$params = [];
+$types = '';
+$values = [];
 
 if ($model !== '') {
-    $where[] = '(c.model LIKE :model OR c.brand LIKE :model)';
-    $params['model'] = '%' . $model . '%';
+    $modelLike = '%' . $model . '%';
+    $where[] = '(c.model LIKE ? OR c.brand LIKE ?)';
+    $types .= 'ss';
+    $values[] = $modelLike;
+    $values[] = $modelLike;
 }
 
 if ($year !== '') {
-    $where[] = 'c.year = :year';
-    $params['year'] = (int)$year;
+    $where[] = 'c.year = ?';
+    $types .= 'i';
+    $values[] = (int)$year;
 }
 
 if ($brand !== '') {
-    $where[] = 'c.brand = :brand';
-    $params['brand'] = $brand;
+    $where[] = 'c.brand = ?';
+    $types .= 's';
+    $values[] = $brand;
 }
 
 if ($bodyStyle !== '') {
-    $where[] = 'c.body_style = :body_style';
-    $params['body_style'] = $bodyStyle;
+    $where[] = 'c.body_style = ?';
+    $types .= 's';
+    $values[] = $bodyStyle;
 }
 
 if ($fuel !== '') {
-    $where[] = 'c.fuel = :fuel';
-    $params['fuel'] = $fuel;
+    $where[] = 'c.fuel = ?';
+    $types .= 's';
+    $values[] = $fuel;
 }
 
-$whereSql = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+$sql = "
+    SELECT
+        c.car_id,
+        c.brand,
+        c.model,
+        c.year,
+        c.color,
+        c.location,
+        c.price,
+        c.image_url,
+        c.body_style,
+        c.mileage,
+        c.fuel,
+        c.transmission,
+        c.power,
+        c.torque,
+        c.acceleration,
+        c.top_speed,
+        c.drivetrain,
+        c.seats,
+        c.vehicle_condition,
+        c.seller_type,
+        c.market_note,
+        c.featured,
+        c.description,
+        s.username AS seller_username,
+        s.name AS seller_name
+    FROM cars c
+    INNER JOIN sellers s ON s.seller_id = c.seller_id
+";
+
+if (!empty($where)) {
+    $sql .= ' WHERE ' . implode(' AND ', $where);
+}
+
+$sql .= " ORDER BY {$orderBy} LIMIT 100";
 
 try {
-    $pdo = getDatabaseConnection();
-    $statement = $pdo->prepare(
-        "SELECT
-            c.car_id,
-            c.brand,
-            c.model,
-            c.year,
-            c.color,
-            c.location,
-            c.price,
-            c.image_url,
-            c.body_style,
-            c.mileage,
-            c.fuel,
-            c.transmission,
-            c.power,
-            c.torque,
-            c.acceleration,
-            c.top_speed,
-            c.drivetrain,
-            c.seats,
-            c.vehicle_condition,
-            c.seller_type,
-            c.market_note,
-            c.featured,
-            c.description,
-            s.username AS seller_username,
-            s.name AS seller_name
-        FROM cars c
-        INNER JOIN sellers s ON s.seller_id = c.seller_id
-        {$whereSql}
-        ORDER BY {$orderBy}
-        LIMIT 100"
-    );
-    $statement->execute($params);
-    $cars = array_map('mapCarRow', $statement->fetchAll());
+    $connection = getDatabaseConnection();
+    $statement = mysqli_prepare($connection, $sql);
+    bindStatementParams($statement, $types, $values);
+    mysqli_stmt_execute($statement);
+
+    $result = mysqli_stmt_get_result($statement);
+    $cars = [];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cars[] = mapCarRow($row);
+    }
+
+    mysqli_stmt_close($statement);
 
     jsonResponse([
         'success' => true,
-        'message' => count($cars) === 1 ? '1 vehicle found.' : count($cars) . ' vehicles found.',
         'data' => [
             'cars' => $cars,
             'count' => count($cars),
-            'filters' => [
-                'model' => $model,
-                'year' => $year,
-                'brand' => $brand,
-                'bodyStyle' => $bodyStyle,
-                'fuel' => $fuel,
-                'sort' => $sort,
-            ],
         ],
     ]);
-} catch (PDOException $error) {
+} catch (mysqli_sql_exception $error) {
     jsonResponse([
         'success' => false,
-        'message' => 'Database search failed. Check the local MySQL configuration.',
+        'message' => 'Search failed. Please try again.',
     ], 500);
 }
 
-function mapCarRow(array $row): array
+function mapCarRow($row)
 {
     return [
         'id' => buildCarId($row),
@@ -143,9 +153,9 @@ function mapCarRow(array $row): array
         'seats' => $row['seats'] ?: '',
         'condition' => $row['vehicle_condition'] ?: 'Used',
         'sellerType' => $row['seller_type'] ?: 'Private seller',
-        'marketNote' => $row['market_note'] ?: 'Market positioning is based on comparable premium listings.',
+        'marketNote' => $row['market_note'] ?: '',
         'description' => $row['description'] ?: '',
-        'featured' => (bool)$row['featured'],
+        'featured' => $row['featured'] ? true : false,
         'seller' => [
             'username' => $row['seller_username'],
             'name' => $row['seller_name'],
@@ -153,11 +163,15 @@ function mapCarRow(array $row): array
     ];
 }
 
-function buildCarId(array $row): string
+function buildCarId($row)
 {
     $base = strtolower((string)$row['brand'] . ' ' . (string)$row['model']);
     $slug = preg_replace('/[^a-z0-9]+/', '-', $base);
     $slug = trim((string)$slug, '-');
 
-    return $slug ? 'car-' . $slug : 'db-car-' . (int)$row['car_id'];
+    if ($slug === '') {
+        return 'db-car-' . (int)$row['car_id'];
+    }
+
+    return 'car-' . $slug;
 }
