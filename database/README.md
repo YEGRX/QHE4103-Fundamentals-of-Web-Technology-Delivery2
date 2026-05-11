@@ -6,7 +6,7 @@ This folder contains the shared MySQL database foundation for Delivery 3.
 
 - `schema.sql` creates the `online_car_sale` database, `sellers` table, and `cars` table.
 - `seed.sql` adds a demo seller and two sample cars for testing login and search.
-- `../config/database.php` provides the shared PDO connection.
+- `../config/database.php` provides the shared MySQL connection.
 - `../api/bootstrap.php` provides shared session, JSON response, request-body, and method helpers.
 
 ## Suggested setup order
@@ -27,6 +27,8 @@ The password stored in `seed.sql` is a bcrypt hash compatible with PHP `password
 
 - `liboyiboop`: build `api/login.php`, `api/logout.php`, and `api/session.php` on top of `api/bootstrap.php`.
 - `tonghaoge`: build `api/search.php` on top of `api/bootstrap.php` and query the `cars` table.
+- `yegrx`: build `api/register.php` on top of `api/bootstrap.php` and store seller accounts in the `sellers` table.
+- `qihaocui`: build `api/add-car.php` on top of `api/bootstrap.php` and store vehicle listings in the `cars` table with the logged-in seller ID.
 
 ## Shared response shape
 
@@ -38,6 +40,3 @@ All PHP endpoints should return JSON using this structure:
   "message": "Human readable status message.",
   "data": {}
 }
-```
-
-Use `success: false` with a clear `message` for validation, login, or database errors.
