@@ -12,7 +12,7 @@ if (empty($input)) {
     $input = readJsonBody();
 }
 
-$sellerId = (int)($seller['seller_id'] ?? 0);
+$sellerId = (int)($seller['seller_id'] ?? $seller['id'] ?? 0);
 
 $brand = trim((string)($input['brand'] ?? ''));
 $model = trim((string)($input['model'] ?? ''));
