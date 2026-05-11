@@ -14,6 +14,13 @@ const STORAGE_KEYS = {
     cars: "ocs_cars"
 };
 
+const API_ENDPOINTS = {
+    login: "api/login.php",
+    logout: "api/logout.php",
+    session: "api/session.php",
+    search: "api/search.php"
+};
+
 const DEMO_USER = {
     name: "SURPASS Demo Seller",
     address: "88 Bund Financial Plaza",
@@ -725,9 +732,10 @@ const VEHICLE_DETAIL_PRESETS = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     seedStorage();
     applyInterfaceMode();
+    await syncSessionFromServer();
     renderShell();
     bindHeaderEvents();
     hydrateCommonViews();
@@ -774,9 +782,8 @@ function renderShell() {
                     </nav>
                     <div class="header-status">
                         <div class="session-pill" data-session-pill>${sessionMarkup}</div>
-                        ${session
-                            ? '<button class="header-logout" type="button" data-logout-button data-cursor-hover>Log out</button>'
-                            : '<a class="ghost-button" href="login.html" data-cursor-hover>Seller access</a>'}
+                        <button class="header-logout" type="button" data-logout-button data-cursor-hover ${session ? "" : "hidden"}>Log out</button>
+                        <a class="ghost-button" href="login.html" data-login-access data-cursor-hover ${session ? "hidden" : ""}>Seller access</a>
                     </div>
                     <button class="menu-toggle" type="button" aria-expanded="false" data-menu-toggle data-cursor-hover>Menu</button>
                 </div>
@@ -834,7 +841,16 @@ function bindHeaderEvents() {
     }
 
     document.querySelectorAll("[data-logout-button]").forEach((button) => {
-        button.addEventListener("click", () => {
+        button.addEventListener("click", async () => {
+            button.disabled = true;
+            try {
+                await requestJson(API_ENDPOINTS.logout, {
+                    method: "POST",
+                    body: {}
+                });
+            } catch (error) {
+                // The local mirror is still cleared so the UI never traps a user in a stale state.
+            }
             localStorage.removeItem(STORAGE_KEYS.session);
             window.location.href = "index.html";
         });
@@ -847,6 +863,13 @@ function hydrateCommonViews() {
         node.innerHTML = session
             ? `Signed in as <strong>${escapeHtml(session.username)}</strong>`
             : "Guest mode active";
+    });
+    document.querySelectorAll("[data-logout-button]").forEach((button) => {
+        button.hidden = !session;
+        button.disabled = false;
+    });
+    document.querySelectorAll("[data-login-access]").forEach((link) => {
+        link.hidden = !!session;
     });
     document.querySelectorAll("[data-current-year]").forEach((node) => {
         node.textContent = new Date().getFullYear();
@@ -1096,7 +1119,7 @@ function initRegistrationPage() {
         input.addEventListener("input", () => clearFieldError(field));
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         let valid = true;
 
@@ -1107,37 +1130,43 @@ function initRegistrationPage() {
             }
         });
 
-        const username = form.elements.username.value.trim();
-        const users = getUsers();
-        if (users.some((user) => user.username.toLowerCase() === username.toLowerCase())) {
-            setFieldError("username", "This username is already taken. Choose another one.");
-            valid = false;
-        }
-
         if (!valid) {
             showMessage(message, "error", "Registration needs attention", "Please correct the highlighted fields and try again.");
             return;
         }
 
-        const newUser = {
-            name: form.elements.name.value.trim(),
-            address: form.elements.address.value.trim(),
-            phone: form.elements.phone.value.trim(),
-            email: form.elements.email.value.trim(),
-            username,
-            password: form.elements.password.value.trim()
-        };
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
 
-        users.push(newUser);
-        saveUsers(users);
-        form.reset();
-        fields.forEach(clearFieldError);
-        showMessage(
-            message,
-            "success",
-            "Registration completed",
-            "Your seller profile is ready. Use the login page to activate your seller session."
-        );
+        try {
+            const response = await fetch("api/register.php", {
+                method: "POST",
+                body: new FormData(form)
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                if (response.status === 409) {
+                    setFieldError("username", "This username or email is already registered.");
+                    setFieldError("email", "This username or email is already registered.");
+                }
+                showMessage(message, "error", "Registration needs attention", result.message || "The seller could not be registered.");
+                return;
+            }
+
+            form.reset();
+            fields.forEach(clearFieldError);
+            showMessage(
+                message,
+                "success",
+                "Registration completed",
+                "Your seller profile has been saved in the MySQL database. Use the login page to activate your seller session."
+            );
+        } catch (error) {
+            showMessage(message, "error", "Registration unavailable", "Please check that XAMPP Apache and MySQL are running, then try again.");
+        } finally {
+            if (submitButton) submitButton.disabled = false;
+        }
     });
 }
 
@@ -1147,32 +1176,46 @@ function initLoginPage() {
     const redirect = getSafeRedirect();
     if (!form || !message) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const username = form.elements.username.value.trim();
         const password = form.elements.password.value.trim();
+        const submitButton = form.querySelector('button[type="submit"]');
 
         if (!username || !password) {
             showMessage(message, "error", "Missing credentials", "Enter both username and password before attempting to sign in.");
             return;
         }
 
-        const matchedUser = getUsers().find((user) => user.username === username && user.password === password);
-        if (!matchedUser) {
-            showMessage(message, "error", "Unable to sign in", "The credentials do not match our seller records. Try the concierge account or your registered details.");
-            return;
+        if (submitButton) submitButton.disabled = true;
+        showMessage(message, "info", "Checking seller records", "Connecting to the seller database...");
+
+        try {
+            const response = await requestJson(API_ENDPOINTS.login, {
+                method: "POST",
+                body: { username, password }
+            });
+            const seller = normalizeSessionUser(response.data?.seller);
+
+            if (!seller) {
+                throw new Error("The server response did not include seller details.");
+            }
+
+            saveSession(seller);
+            hydrateCommonViews();
+            showMessage(message, "success", "Seller session activated", `You are now signed in. Redirecting you to ${redirect === "add-car.html" ? "the listing desk" : "the seller hub"}...`);
+            window.setTimeout(() => {
+                window.location.href = redirect;
+            }, 850);
+        } catch (error) {
+            showMessage(
+                message,
+                "error",
+                "Unable to sign in",
+                error.message || "The credentials do not match our seller records."
+            );
+            if (submitButton) submitButton.disabled = false;
         }
-
-        saveSession({
-            username: matchedUser.username,
-            name: matchedUser.name,
-            email: matchedUser.email
-        });
-
-        showMessage(message, "success", "Seller session activated", `You are now signed in. Redirecting you to ${redirect === "add-car.html" ? "the listing desk" : "the seller hub"}...`);
-        window.setTimeout(() => {
-            window.location.href = redirect;
-        }, 850);
     });
 }
 
@@ -1237,7 +1280,7 @@ function initAddCarPage() {
         preview.dataset.imageData = dataUrl;
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const validation = validateCarForm(form);
         if (!validation.valid) {
@@ -1245,41 +1288,46 @@ function initAddCarPage() {
             return;
         }
 
-        const storedImage = preview.dataset.imageData || buildVehicleArt({
-            brand: form.elements.brand.value.trim(),
-            model: form.elements.model.value.trim(),
-            color: form.elements.color.value.trim()
-        });
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
 
-        const newCar = normalizeCar({
-            id: `car-${Date.now()}`,
-            brand: form.elements.brand.value.trim(),
-            model: form.elements.model.value.trim(),
-            year: Number(form.elements.year.value.trim()),
-            color: form.elements.color.value.trim(),
-            location: form.elements.location.value.trim(),
-            price: Number(form.elements.price.value.trim()),
-            bodyStyle: form.elements.bodyStyle.value.trim(),
-            mileage: Number(form.elements.mileage.value.trim()),
-            fuel: form.elements.fuel.value,
-            transmission: form.elements.transmission.value,
-            description: form.elements.description.value.trim() || "A newly listed luxury vehicle added by the active seller session.",
-            image: storedImage,
-            featured: false
-        });
+        const formData = new FormData(form);
+        formData.delete("imageFile");
+        formData.append("image_url", "assets/generated/seller-add-car.png");
 
-        const cars = getCars();
-        cars.unshift(newCar);
-        saveCars(cars);
-        form.reset();
-        preview.dataset.imageData = "";
-        syncGeneratedPreview(form, preview);
-        showMessage(
-            message,
-            "success",
-            "Vehicle added to inventory",
-            `The listing for ${newCar.brand} ${newCar.model} is now available in the search gallery.`
-        );
+        try {
+            const response = await fetch("api/add-car.php", {
+                method: "POST",
+                body: formData,
+                credentials: "same-origin"
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                if (response.status === 401) {
+                    showMessage(message, "error", "Seller login required", result.message || "Please log in before adding a car.");
+                    return;
+                }
+
+                showMessage(message, "error", "Listing was not saved", result.message || "Please check the car details and try again.");
+                return;
+            }
+
+            const car = result.data || {};
+            form.reset();
+            preview.dataset.imageData = "";
+            syncGeneratedPreview(form, preview);
+            showMessage(
+                message,
+                "success",
+                "Vehicle saved in MySQL",
+                `${car.brand || "This car"} ${car.model || ""} has been added to the cars table.`
+            );
+        } catch (error) {
+            showMessage(message, "error", "Add car unavailable", "Please check that XAMPP Apache and MySQL are running, then try again.");
+        } finally {
+            if (submitButton) submitButton.disabled = false;
+        }
     });
 }
 
@@ -1312,33 +1360,89 @@ function initSearchPage() {
         form.elements[name]?.addEventListener("change", () => performSearch());
     });
 
-    function performSearch() {
-        const model = form.elements.model.value.trim().toLowerCase();
-        const year = form.elements.year.value.trim();
-        const brand = form.elements.brand?.value || "";
-        const bodyStyle = form.elements.bodyStyle?.value || "";
-        const fuel = form.elements.fuel?.value || "";
-        const sort = form.elements.sort.value;
-        let cars = getCars();
+    let searchRequestId = 0;
 
-        cars = cars.filter((car) => {
-            const matchesModel = !model || `${car.brand} ${car.model}`.toLowerCase().includes(model);
-            const matchesYear = !year || String(car.year) === year;
-            const matchesBrand = !brand || car.brand === brand;
-            const matchesBody = !bodyStyle || car.bodyStyle === bodyStyle;
-            const matchesFuel = !fuel || car.fuel === fuel;
-            return matchesModel && matchesYear && matchesBrand && matchesBody && matchesFuel;
-        });
+    async function performSearch() {
+        const requestId = ++searchRequestId;
+        const query = getSearchQuery(form);
+        updateSearchUrl(query);
+        count.textContent = "Searching database inventory...";
+        empty.style.display = "none";
 
-        cars = sortCars(cars, sort);
-        updateSearchUrl({ model, year, brand, bodyStyle, fuel, sort });
+        try {
+            const cars = await requestSearchResults(query);
+            if (requestId !== searchRequestId) return;
+            mergeApiCarsIntoLocalStorage(cars);
+            renderSearchResults(cars);
+        } catch (error) {
+            if (requestId !== searchRequestId) return;
+            count.textContent = error.message || "Database search is unavailable.";
+            empty.style.display = "block";
+            results.innerHTML = "";
+        }
+    }
 
-        count.textContent = cars.length === 1 ? "1 vehicle available" : `${cars.length} vehicles available`;
+    function renderSearchResults(cars) {
+        count.textContent = cars.length === 1 ? "1 vehicle found" : `${cars.length} vehicles found`;
         empty.style.display = cars.length ? "none" : "block";
-
         results.innerHTML = cars.map(renderVehicleCard).join("");
         attachVehicleImageFallbacks(results);
     }
+
+    function getSearchQuery(searchForm) {
+        return {
+            model: searchForm.elements.model.value.trim(),
+            year: searchForm.elements.year.value.trim(),
+            brand: searchForm.elements.brand?.value || "",
+            bodyStyle: searchForm.elements.bodyStyle?.value || "",
+            fuel: searchForm.elements.fuel?.value || "",
+            sort: searchForm.elements.sort.value
+        };
+    }
+
+}
+
+async function requestSearchResults(query) {
+    const params = new URLSearchParams();
+
+    if (query.model) params.set("model", query.model);
+    if (query.year) params.set("year", query.year);
+    if (query.brand) params.set("brand", query.brand);
+    if (query.bodyStyle) params.set("bodyStyle", query.bodyStyle);
+    if (query.fuel) params.set("fuel", query.fuel);
+    if (query.sort && query.sort !== "featured") params.set("sort", query.sort);
+
+    const response = await fetch(`${API_ENDPOINTS.search}?${params.toString()}`, {
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+            Accept: "application/json"
+        }
+    });
+    const contentType = response.headers.get("content-type") || "";
+    const payload = contentType.includes("application/json")
+        ? await response.json()
+        : { success: false, message: await response.text() };
+
+    if (!response.ok || payload.success === false) {
+        throw new Error(payload.message || "Database search is unavailable.");
+    }
+
+    const cars = Array.isArray(payload.data?.cars) ? payload.data.cars : [];
+    return cars.map(normalizeCar);
+}
+
+function mergeApiCarsIntoLocalStorage(apiCars) {
+    if (!Array.isArray(apiCars) || apiCars.length === 0) return;
+
+    const localCars = getCars();
+    const merged = new Map(localCars.map((car) => [car.id, car]));
+
+    apiCars.forEach((car) => {
+        merged.set(car.id, normalizeCar(car));
+    });
+
+    saveCars([...merged.values()]);
 }
 
 function initDetailPage() {
@@ -1601,6 +1705,36 @@ function saveSession(session) {
     localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(session));
 }
 
+async function syncSessionFromServer() {
+    try {
+        const response = await requestJson(API_ENDPOINTS.session, {
+            method: "GET"
+        });
+        const seller = normalizeSessionUser(response.data?.seller);
+
+        if (response.data?.authenticated && seller) {
+            saveSession(seller);
+        } else {
+            localStorage.removeItem(STORAGE_KEYS.session);
+        }
+
+        hydrateCommonViews();
+    } catch (error) {
+        localStorage.removeItem(STORAGE_KEYS.session);
+    }
+}
+
+function normalizeSessionUser(rawSeller) {
+    if (!rawSeller || typeof rawSeller !== "object") return null;
+
+    return {
+        seller_id: Number(rawSeller.seller_id || rawSeller.id || rawSeller.sellerId || 0),
+        username: rawSeller.username || "",
+        name: rawSeller.name || rawSeller.username || "",
+        email: rawSeller.email || ""
+    };
+}
+
 function getCars() {
     const cars = readJson(STORAGE_KEYS.cars);
     return Array.isArray(cars) ? cars.map(normalizeCar) : [];
@@ -1616,6 +1750,35 @@ function readJson(key) {
     } catch (error) {
         return null;
     }
+}
+
+async function requestJson(url, options = {}) {
+    const method = (options.method || "GET").toUpperCase();
+    const fetchOptions = {
+        method,
+        credentials: "same-origin",
+        headers: {
+            Accept: "application/json",
+            ...(options.headers || {})
+        }
+    };
+
+    if (method !== "GET") {
+        fetchOptions.headers["Content-Type"] = "application/json";
+        fetchOptions.body = JSON.stringify(options.body || {});
+    }
+
+    const response = await fetch(url, fetchOptions);
+    const contentType = response.headers.get("content-type") || "";
+    const payload = contentType.includes("application/json")
+        ? await response.json()
+        : { success: false, message: await response.text() };
+
+    if (!response.ok || payload.success === false) {
+        throw new Error(payload.message || "The server could not complete the request.");
+    }
+
+    return payload;
 }
 
 function validateRegistrationField(field, rawValue) {
